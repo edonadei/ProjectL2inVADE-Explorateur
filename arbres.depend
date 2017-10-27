@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1508927904 source:c:\users\emrick-pc-portable\google drive\travail personnel efrei\info\dev projet\arbres\main.c
+	<stdio.h>
+	<string.h>
+	<stdlib.h>
+
