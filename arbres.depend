@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1509720126 source:c:\users\emrick-pc-portable\documents\github\projectl2invade-explorateur\main.c
+	<stdio.h>
+	<string.h>
+	<stdlib.h>
+

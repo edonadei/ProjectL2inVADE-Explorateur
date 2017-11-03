@@ -4,15 +4,23 @@
 #define TAG_X 10
 #define TAG_Y 128
 
+typedef struct nodetag
+{
+    char *word;
+    struct nodetag *next;
+
+}nodetag;
+
 typedef struct node {
     char *word;
-    char tags[TAG_X][TAG_Y];
     int depth, type;  // 0 for folder, 1 for file
 
+    struct nodetag *nexttag;
     struct node *child;   // point to children of this node
     struct node *next;    // point to next node at same level
 }node;
 
+typedef nodetag *taglist;
 typedef node *tree;
 
 tree init_new_tree(char* name_of_tree, int typechoice)
@@ -25,6 +33,7 @@ tree init_new_tree(char* name_of_tree, int typechoice)
     new_tree->child=NULL;
     new_tree->type=typechoice; // Donne l'information que c'est un fichier (tant qu'il n'a pas de childs)
     new_tree->word=name_of_tree;
+    new_tree->nexttag=NULL; // A l'initialisation, pas de tags
     }
 
     return new_tree;
@@ -55,6 +64,69 @@ tree add_child(tree n,char* node_name,int typechoice)
     return (n->child = init_new_tree(node_name,typechoice));
 }
 
+taglist init_new_tag(char* name_of_tag)
+{
+   taglist new_tag = malloc(sizeof(nodetag));
+
+    if (new_tag)
+    {
+    new_tag->word=name_of_tag;
+    // printf("%s , ", name_of_tag); // Utile en cas de debug
+    new_tag->next=NULL;
+    }
+
+    return new_tag;
+}
+
+taglist add_tag(taglist t,char* name_of_tag)
+{
+  if (t==NULL)
+    return NULL;
+
+   while (t->next)
+    t=t->next;
+
+   return (t->next = init_new_tag(name_of_tag));
+}
+
+void show_tags(taglist t)
+{
+    printf("\nListe de tags pour cet item: ");
+    while (t->next)
+    {
+        printf("%s, ",t->word);
+        t=t->next;
+    }
+    printf("%s",t->word); //le dernier de la liste !
+    printf("\n");
+}
+
+/* // VERSION TEST DE LA FONCTION ADD_TAGS, NON FONCTIONNEL
+taglist add_tags(tree n, char* node_name, char* tag_name, int typechoice)
+{
+    if ((n->type)==(0))
+    {
+        printf("\n Opération impossible, c'est un dossier \n");
+        exit(EXIT_FAILURE);
+    }
+
+    else if (n->nexttag==NULL) // Si le fichier n'a pas encore de tags, on initialise
+    {
+        taglist newtag=malloc(sizeof(nodetag)); // On alloue un nouveau tag et on l'ajoute à la suite des tags existants
+        newtag->word=tag_name;
+        newtag->next=NULL;
+        // n->nexttag=newtag;
+        return newtag;
+    }
+    else // Si le fichier a déja au moins un tag
+    {
+        while (n->nexttag)
+    n=n->nexttag;
+    }
+}
+
+*/
+
 void _print_n_char(char c, int n) {while (n--) putchar(c); }
 
 void print_array(char *t) {
@@ -83,13 +155,19 @@ void print_tree(tree a, int p) { // p = profondeur de l'arbre
 
 int main()
 {
-
+    // Test de la création d'un arbre
     tree a = init_new_tree("root",0);
     add_child(a,"enfant",0);
-    add_child(a->child,"enfant2",1);
-    add_next(a->child,"next2",1);
+    add_child(a->child,"next",1);
+    add_next(a->child,"CE d'atome a la puce",1);
     add_child(a->child->child,"enfant3",0);
     add_next(a,"next",0);
     print_tree(a,0);
+
+    // Test de l 'affichage de tags
+    a->child->nexttag = init_new_tag("physique");
+    add_tag(a->child->nexttag,"atome a la puce");
+    add_tag(a->child->nexttag,"ce");
+    show_tags(a->child->nexttag);
     return 0;
 }
