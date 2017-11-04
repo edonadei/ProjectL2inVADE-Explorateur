@@ -1,0 +1,3 @@
+root*root*0root*0root*0enfant*0physiqueatome a la puceceenfant*0*physique-atome a la puce-ce-enfant*0*physique-atome a la puce-ceenfant*0*physique-atome a la puce-ce
+enfant*0*physique-atome a la puce-ce
+enfant*0*physique-atome a la puce-ce#

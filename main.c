@@ -4,6 +4,11 @@
 #define TAG_X 10
 #define TAG_Y 128
 
+typedef struct nodeId
+{
+    int id;
+    struct nodeId *next;
+}nodeId;
 typedef struct nodetag
 {
     char *word;
@@ -15,14 +20,41 @@ typedef struct node {
     char *word;
     int depth, type;  // 0 for folder, 1 for file
 
+    struct nodeId *nextId;
     struct nodetag *nexttag;
     struct node *child;   // point to children of this node
     struct node *next;    // point to next node at same level
 }node;
 
+typedef nodeId *Idlist;
 typedef nodetag *taglist;
 typedef node *tree;
 
+void save_new_tree(tree t)
+{
+    FILE* fichier = NULL;
+    fichier = fopen("arbre.txt", "a");
+
+    if (fichier!=NULL)
+    {
+        //Définir l'id
+        //fseek(fichier, 0, SEEK_END);
+        fprintf(fichier,"%s*%d*",t->word,t->type);
+
+        while(t->nexttag!=NULL)
+        {
+            fprintf(fichier,"%s",t->nexttag->word);
+            t->nexttag=t->nexttag->next;
+            if(t->nexttag!=NULL)
+            {
+                fputc('-',fichier);
+            }
+        }
+
+        fputs("#\n",fichier);
+    }
+    fclose(fichier);
+}
 tree init_new_tree(char* name_of_tree, int typechoice)
 {
     tree new_tree = malloc(sizeof(node));
@@ -88,6 +120,7 @@ taglist add_tag(taglist t,char* name_of_tag)
 
    return (t->next = init_new_tag(name_of_tag));
 }
+
 
 void show_tags(taglist t)
 {
@@ -169,5 +202,6 @@ int main()
     add_tag(a->child->nexttag,"atome a la puce");
     add_tag(a->child->nexttag,"ce");
     show_tags(a->child->nexttag);
+    save_new_tree(a->child);
     return 0;
 }
