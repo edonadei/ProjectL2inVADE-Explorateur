@@ -4,11 +4,16 @@
 #define TAG_X 10
 #define TAG_Y 128
 
+// STRUCTURES
+
+// Structure de sauvegarde
 typedef struct nodeId
 {
     int id;
     struct nodeId *next;
 } nodeId;
+
+// Structure de liste de tags
 typedef struct nodetag
 {
     char *word;
@@ -16,6 +21,7 @@ typedef struct nodetag
 
 } nodetag;
 
+// Structure de l'arbre
 typedef struct node
 {
     char *word;
@@ -31,6 +37,8 @@ typedef struct node
 typedef nodeId *Idlist;
 typedef nodetag *taglist;
 typedef node *tree;
+
+// FONCTIONS DE SAUVEGARDE
 
 void save_new_tree(tree t)
 {
@@ -127,6 +135,7 @@ void sizeId(int *size_x, int *size_y)
     *size_y = size_y_max;
     fclose(fichier);
 }
+
 char** tabTree()
 {
     FILE* fichier = NULL;
@@ -236,6 +245,8 @@ void sortFolderTree()
 
 }
 
+// FONCTION DE GESTION DE L'ARBRE
+
 tree init_new_tree(char* name_of_tree, int typechoice,tree father)
 {
     tree new_tree = malloc(sizeof(node));
@@ -278,6 +289,8 @@ tree add_child(tree n,char* node_name,int typechoice)
         return (n->child = init_new_tree(node_name,typechoice,n)); // On envoie en paramètre l'adresse du père
 }
 
+// FONCTIONS DE GESTION DES TAGS
+
 taglist init_new_tag(char* name_of_tag)
 {
     taglist new_tag = malloc(sizeof(nodetag));
@@ -303,6 +316,65 @@ taglist add_tag(taglist t,char* name_of_tag)
     return (t->next = init_new_tag(name_of_tag));
 }
 
+// FONCTIONS D'AFFICHAGE
+void dossier_ou_fichier(tree a)
+{
+if (a->type==0) printf("Dossier ");
+if (a->type==1) printf("Ficher ");
+}
+
+void show_folder_childs(tree a)
+{
+if (a->child)
+    {
+        dossier_ou_fichier(a->child);
+        printf(" _%s\n",a->child->word);
+
+        while(a->child->next)
+        {
+            dossier_ou_fichier(a->child->next);
+            printf("  _%s\n", a->child->next->word);
+            a=a->child;
+        }
+    }
+    else
+    {
+        printf("  _NULL");
+    }
+}
+
+void arborescence(tree a)
+{
+int i=0;
+while(a->father)
+    {
+        a=a->father;
+        i=i+1;
+    }
+
+// printf("%s>",a->word); // Pas besoin, debug
+
+while (i!=-1)
+    {
+        printf(">%s",a->word);
+        a=a->child;
+        i=i-1;
+    }
+
+}
+
+void browse_expl(tree a)
+{
+    // int choice;
+    //while (choice!= 0)
+    //{
+        printf("\n");
+        arborescence(a);
+        printf("\n");
+        show_folder_childs(a);
+
+    //}
+}
 
 void show_tags(taglist t)
 {
@@ -352,7 +424,10 @@ int main()
     // Test de la création d'un arbre
     tree a = init_new_tree("root",0,NULL);
     add_child(a,"enfant",0);
-    add_child(a->child,"next",1);
+    add_child(a,"enfant2",0);
+    add_child(a->child,"Cours",1);
+    add_child(a->child,"DE",1);
+    add_child(a->child,"CE",1);
     add_next(a->child,"CE d'atome a la puce",1);
     add_child(a->child->child,"enfant3",0);
     add_next(a,"next",0);
@@ -368,5 +443,7 @@ int main()
     save_new_tree(a->child);
     tabId();
 
+    // Test de de l'affichage d'enfant d'un dossier
+    browse_expl(a->child);
     return 0;
 }
