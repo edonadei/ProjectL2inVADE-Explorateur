@@ -328,13 +328,13 @@ void show_folder_childs(tree a)
 if (a->child)
     {
         dossier_ou_fichier(a->child);
-        printf(" _%s\n",a->child->word);
+        printf("  _%s\n",a->child->word);
 
         while(a->child->next)
         {
             dossier_ou_fichier(a->child->next);
             printf("  _%s\n", a->child->next->word);
-            a=a->child;
+            a->child=a->child->next;
         }
     }
     else
@@ -423,14 +423,22 @@ int main()
 {
     // Test de la création d'un arbre
     tree a = init_new_tree("root",0,NULL);
-    add_child(a,"enfant",0);
-    add_child(a,"enfant2",0);
-    add_child(a->child,"Cours",1);
-    add_child(a->child,"DE",1);
-    add_child(a->child,"CE",1);
-    add_next(a->child,"CE d'atome a la puce",1);
-    add_child(a->child->child,"enfant3",0);
-    add_next(a,"next",0);
+    add_child(a,"physique",0);
+    add_child(a,"information numerique",0);
+    add_child(a,"mathematiques",0);
+    add_child(a->child,"CE",0);
+    add_child(a->child->child,"CE n1",1);
+    add_child(a->child,"DE",0);
+    add_child(a->child,"Cours",0);
+    add_child(a->child->next,"CE",0);
+    add_child(a->child->next->child,"CE n1",1);
+    add_child(a->child->next,"DE",0);
+    add_child(a->child->next,"Cours",0);
+    add_child(a->child->next->next,"CE",0);
+    add_child(a->child->next->next->child,"CE n1",1);
+    add_child(a->child->next->next,"DE",0);
+    add_child(a->child->next->next,"Cours",0);
+
     print_tree(a,0);
 
     printf("\nPere de l'element %s = %s \n",a->child->child->word,a->child->child->father->word);
