@@ -349,7 +349,7 @@ int i=0;
 while(a->father)
     {
         a=a->father;
-        i=i+1;
+        i++;
     }
 
 // printf("%s>",a->word); // Pas besoin, debug
@@ -358,7 +358,7 @@ while (i!=-1)
     {
         printf(">%s",a->word);
         a=a->child;
-        i=i-1;
+        i--;
     }
 
 }
