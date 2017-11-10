@@ -800,7 +800,7 @@ int main()
     add_tag(a->child->nexttag,"ce");
     show_tags(a->nexttag);
 
-    tree b=init_new_tree("Emrick",0);
+    tree b=init_new_tree("Emrick",0,NULL);
 
     b->nextId = malloc(sizeof(nodeId));
     b->nextId->id = 2;
