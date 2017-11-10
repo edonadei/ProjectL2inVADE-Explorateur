@@ -4,11 +4,16 @@
 #define TAG_X 10
 #define TAG_Y 128
 
+// STRUCTURES
+
+// Structure de sauvegarde
 typedef struct nodeId
 {
     int id;
     struct nodeId *next;
 } nodeId;
+
+// Structure de liste de tags
 
 typedef struct nodetag
 {
@@ -17,13 +22,15 @@ typedef struct nodetag
 
 } nodetag;
 
+// Structure de l'arbre
 typedef struct node
 {
     char *word;
     int depth, type;  // 0 for folder, 1 for file
 
     struct nodeId *nextId;
-    struct nodetag *nexttag;
+    struct nodetag *nexttag; // Point to the list of tags
+    struct node *father; // point to father of the node
     struct node *child;   // point to children of this node
     struct node *next;    // point to next node at same level
 } node;
@@ -31,6 +38,7 @@ typedef struct node
 typedef nodeId *Idlist;
 typedef nodetag *taglist;
 typedef node *tree;
+
 
 void freeTabInt(int **tab,int x_tab)///On libère la mémoire d'un tableau 2D
 {
@@ -55,32 +63,6 @@ void freeTabChar(char **tab,int x_tab)///On libère la mémoire d'un tableau 2D
     free(tab);///On libère le tableau
 }
 
-void save_new_tree(tree t)
-{
-    FILE* fichier = NULL;
-    fichier = fopen("arbre.txt", "a");
-
-    if (fichier!=NULL)
-    {
-        //Définir l'id
-
-        fprintf(fichier,"*%s*%d*",t->word,t->type);
-
-        while(t->nexttag!=NULL)
-        {
-            fprintf(fichier,"%s",t->nexttag->word);
-            t->nexttag=t->nexttag->next;
-            if(t->nexttag!=NULL)
-            {
-                fputc('-',fichier);
-            }
-        }
-        fputs("*",fichier);
-
-        fputs("\n",fichier);
-    }
-    fclose(fichier);
-}
 
 void sizeFile(int *size_x,int *size_y)
 {
@@ -150,6 +132,7 @@ void sizeId(int *size_x, int *size_y)
     *size_y = size_y_max;
     fclose(fichier);
 }
+
 char** tabTree()
 {
     FILE* fichier = NULL;
@@ -394,6 +377,7 @@ int sizeTabChar1D(char *tab)
     return i;
 }
 
+
 void counterCharLSC(taglist a, int *c_size, int *t_size)
 {
     taglist b = a;
@@ -613,7 +597,10 @@ void sortFolderTree(tree a)
 
 }
 
-tree init_new_tree(char* name_of_tree, int typechoice)
+
+// FONCTION DE GESTION DE L'ARBRE
+
+tree init_new_tree(char* name_of_tree, int typechoice,tree father)
 {
     tree new_tree = malloc(sizeof(node));
 
@@ -621,6 +608,7 @@ tree init_new_tree(char* name_of_tree, int typechoice)
     {
         new_tree->next=NULL;
         new_tree->child=NULL;
+        new_tree->father=father;
         new_tree->type=typechoice; // Donne l'information que c'est un fichier (tant qu'il n'a pas de childs)
         new_tree->word=name_of_tree;
         new_tree->nexttag=NULL; // A l'initialisation, pas de tags
@@ -638,7 +626,7 @@ tree add_next(tree n,char* node_name,int typechoice)
     while (n->next)
         n=n->next;
 
-    return (n->next = init_new_tree(node_name,typechoice));
+    return (n->next = init_new_tree(node_name,typechoice,n)); // On envoie en paramètre l'adresse du père
 }
 
 tree add_child(tree n,char* node_name,int typechoice)
@@ -652,8 +640,10 @@ tree add_child(tree n,char* node_name,int typechoice)
         return add_next(n->child,node_name,typechoice);
 
     else
-        return (n->child = init_new_tree(node_name,typechoice));
+        return (n->child = init_new_tree(node_name,typechoice,n)); // On envoie en paramètre l'adresse du père
 }
+
+// FONCTIONS DE GESTION DES TAGS
 
 taglist init_new_tag(char* name_of_tag)
 {
@@ -677,6 +667,65 @@ taglist add_tag(taglist t,char* name_of_tag)
     return (t->next = init_new_tag(name_of_tag));
 }
 
+// FONCTIONS D'AFFICHAGE
+void dossier_ou_fichier(tree a)
+{
+if (a->type==0) printf("Dossier ");
+if (a->type==1) printf("Ficher ");
+}
+
+void show_folder_childs(tree a)
+{
+if (a->child)
+    {
+        dossier_ou_fichier(a->child);
+        printf("  _%s\n",a->child->word);
+
+        while(a->child->next)
+        {
+            dossier_ou_fichier(a->child->next);
+            printf("  _%s\n", a->child->next->word);
+            a->child=a->child->next;
+        }
+    }
+    else
+    {
+        printf("  _NULL");
+    }
+}
+
+void arborescence(tree a)
+{
+int i=0;
+while(a->father)
+    {
+        a=a->father;
+        i++;
+    }
+
+// printf("%s>",a->word); // Pas besoin, debug
+
+while (i!=-1)
+    {
+        printf(">%s",a->word);
+        a=a->child;
+        i--;
+    }
+
+}
+
+void browse_expl(tree a)
+{
+    // int choice;
+    //while (choice!= 0)
+    //{
+        printf("\n");
+        arborescence(a);
+        printf("\n");
+        show_folder_childs(a);
+
+    //}
+}
 
 void show_tags(taglist t)
 {
@@ -689,8 +738,6 @@ void show_tags(taglist t)
     printf("%s",t->word); //le dernier de la liste !
     printf("\n");
 }
-
-
 
 void _print_n_char(char c, int n)
 {
@@ -726,13 +773,26 @@ void print_tree(tree a, int p)   // p = profondeur de l'arbre
 int main()
 {
     // Test de la création d'un arbre
-    tree a = init_new_tree("root",0);
-    add_child(a,"enfant",0);
-    add_child(a->child,"next",1);
-    add_next(a->child,"CE d'atome a la puce",1);
-    add_child(a->child->child,"enfant3",0);
-    add_next(a,"next",0);
+    tree a = init_new_tree("root",0,NULL);
+    add_child(a,"physique",0);
+    add_child(a,"information numerique",0);
+    add_child(a,"mathematiques",0);
+    add_child(a->child,"CE",0);
+    add_child(a->child->child,"CE n1",1);
+    add_child(a->child,"DE",0);
+    add_child(a->child,"Cours",0);
+    add_child(a->child->next,"CE",0);
+    add_child(a->child->next->child,"CE n1",1);
+    add_child(a->child->next,"DE",0);
+    add_child(a->child->next,"Cours",0);
+    add_child(a->child->next->next,"CE",0);
+    add_child(a->child->next->next->child,"CE n1",1);
+    add_child(a->child->next->next,"DE",0);
+    add_child(a->child->next->next,"Cours",0);
+
     print_tree(a,0);
+
+    printf("\nPere de l'element %s = %s \n",a->child->child->word,a->child->child->father->word);
 
     // Test de l 'affichage de tags
     a->nexttag = init_new_tag("physique");
@@ -753,7 +813,10 @@ int main()
     add_tag(b->nexttag,"Gars sympa");
     add_tag(b->nexttag,"Homme stock");
 
-
     sortFolderTree(b);
+
+    // Test de de l'affichage d'enfant d'un dossier
+    browse_expl(a->child);
+
     return 0;
 }
