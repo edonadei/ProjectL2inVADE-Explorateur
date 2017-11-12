@@ -561,39 +561,72 @@ void insertTreeToFile(char **tab_tree, int size_x)
     fclose(fichier);
 }
 
+void insertTreeToNewFile(tree a)
+{
+    FILE* fichier = NULL;
+    fichier = fopen("arbre.txt", "w");
+
+    if (fichier!=NULL)
+    {
+        taglist b = a->nexttag;
+
+        fprintf(fichier,"%d*%s*%d*",0, a->word, a->type);
+
+        while(a->nexttag->next != NULL)
+        {
+            fprintf(fichier,"%s-", a->nexttag->word);
+            a->nexttag = a->nexttag->next;
+        }
+        fprintf(fichier,"%s*\n", a->nexttag->word);
+
+        a->nexttag = b;
+    }
+
+    fclose(fichier);
+}
+
 void sortFolderTree(tree a)
 {
 
-    int size_new_tree = counterLSC(a->nextId);
+    FILE* fichier = NULL;
+    fichier = fopen("arbre.txt", "r");
 
-    int *new_tree_id = convertLSCtoTab(a->nextId, size_new_tree);
-    int x_tree, y_tree, x_id, y_id;
-    sizeFile(&x_tree,&y_tree);
-    sizeId(&x_id,&y_id);
-
-    char **tab_tree = tabTree();
-    int **tab_id = tabId();
-
-    if (tab_tree != NULL && tab_id != NULL)
+    if (fichier != NULL)
     {
-        //On doit trouver la position du nouveau maillon
-        int pos = posIdTab(new_tree_id, tab_id, x_id, size_new_tree);
+        int size_new_tree = counterLSC(a->nextId);
 
-        if (pos != -1) //Si l'id n'est pas déjà présent
+        int *new_tree_id = convertLSCtoTab(a->nextId, size_new_tree);
+        int x_tree, y_tree, x_id, y_id;
+        sizeFile(&x_tree,&y_tree);
+        sizeId(&x_id,&y_id);
+
+        char **tab_tree = tabTree();
+        int **tab_id = tabId();
+
+        if (tab_tree != NULL && tab_id != NULL)
         {
-            char **new_tree = addNewId(a, pos, new_tree_id, size_new_tree, tab_tree, x_tree, y_tree);
+            //On doit trouver la position du nouveau maillon
+            int pos = posIdTab(new_tree_id, tab_id, x_id, size_new_tree);
 
-            insertTreeToFile(new_tree, x_tree+1);
+            if (pos != -1) //Si l'id n'est pas déjà présent
+            {
+                char **new_tree = addNewId(a, pos, new_tree_id, size_new_tree, tab_tree, x_tree, y_tree);
 
-            freeTabChar(new_tree, x_tree+1);
+                insertTreeToFile(new_tree, x_tree+1);
+
+                freeTabChar(new_tree, x_tree+1);
+            }
+
+            free(new_tree_id);
+            freeTabChar(tab_tree,x_tree+1);
         }
-
-
-
-
-        free(new_tree_id);
-        freeTabChar(tab_tree,x_tree+1);
     }
+    else
+    {
+        insertTreeToNewFile(a);
+    }
+
+    fclose(fichier);
 
 }
 
@@ -670,13 +703,13 @@ taglist add_tag(taglist t,char* name_of_tag)
 // FONCTIONS D'AFFICHAGE
 void dossier_ou_fichier(tree a)
 {
-if (a->type==0) printf("Dossier ");
-if (a->type==1) printf("Ficher ");
+    if (a->type==0) printf("Dossier ");
+    if (a->type==1) printf("Ficher ");
 }
 
 void show_folder_childs(tree a)
 {
-if (a->child)
+    if (a->child)
     {
         dossier_ou_fichier(a->child);
         printf("  _%s\n",a->child->word);
@@ -696,8 +729,8 @@ if (a->child)
 
 void arborescence(tree a)
 {
-int i=0;
-while(a->father)
+    int i=0;
+    while(a->father)
     {
         a=a->father;
         i++;
@@ -705,7 +738,7 @@ while(a->father)
 
 // printf("%s>",a->word); // Pas besoin, debug
 
-while (i!=-1)
+    while (i!=-1)
     {
         printf(">%s",a->word);
         a=a->child;
@@ -719,10 +752,10 @@ void browse_expl(tree a)
     // int choice;
     //while (choice!= 0)
     //{
-        printf("\n");
-        arborescence(a);
-        printf("\n");
-        show_folder_childs(a);
+    printf("\n");
+    arborescence(a);
+    printf("\n");
+    show_folder_childs(a);
 
     //}
 }
@@ -805,7 +838,7 @@ int main()
     b->nextId = malloc(sizeof(nodeId));
     b->nextId->id = 2;
     b->nextId->next = malloc(sizeof(nodeId));
-    b->nextId->next->id = 1;
+    b->nextId->next->id = 6;
     b->nextId->next->next = malloc(sizeof(nodeId));
     b->nextId->next->next->id = 2;
     b->nextId->next->next->next = NULL;
