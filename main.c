@@ -6,8 +6,16 @@
 #include "tools.h"
 #include "struct_funct.h"
 
+#define DEBUG 0
+
+
 int main()
 {
+    init_tree_save();
+    #if DEBUG
+
+    init_tree_save();
+
     // Test de la création d'un arbre
     tree a = init_new_tree("root",0,NULL);
     add_child(a,"physique",0);
@@ -53,6 +61,7 @@ int main()
 
     // Test de de l'affichage d'enfant d'un dossier
     browse_expl(a->child);
+    #endif
 
     return 0;
 }

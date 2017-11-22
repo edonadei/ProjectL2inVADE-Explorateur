@@ -1,6 +1,9 @@
 #ifndef STRUCT_FUNCT_H_INCLUDED
 #define STRUCT_FUNCT_H_INCLUDED
 
+
+tree init_tree_save();
+tree creat_tree_save(tree a, char **info, int info_x, int info_y, int pos_x);
 // FONCTION DE GESTION DE L'ARBRE
 
 tree init_new_tree(char* name_of_tree, int typechoice,tree father);

@@ -45,9 +45,18 @@ void sizeId(int *size_x, int *size_y)
     {
         while((c=fgetc(fichier)) != EOF)
         {
+            if(c=='*' && stop == 1)
+            {
+                y++;
+                    if (size_y_max < y)
+                    {
+                        size_y_max = y;
+                    }
+            }
             if(c=='*')
             {
                 stop = 0;
+
             }
             if (stop)
             {
@@ -59,6 +68,7 @@ void sizeId(int *size_x, int *size_y)
                         size_y_max = y;
                     }
                 }
+
             }
             if(c=='\n')
             {

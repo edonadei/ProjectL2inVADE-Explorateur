@@ -36,9 +36,8 @@ tree creat_tree_save(tree a, char **info, int info_x, int info_y, int pos_x)
     int pos_y=0;
     int size_element;
 
+
     a = malloc(sizeof(tree));
-    a->next=NULL;
-    a->child=NULL;
     while(info[pos_x][pos_y] != '*')
     {
         pos_y = pos_y + 1;
@@ -50,14 +49,14 @@ tree creat_tree_save(tree a, char **info, int info_x, int info_y, int pos_x)
     {
         size_element++;
     }
-
-    a->word = malloc_tad1D(size_element+1);
+printf("test");
+    a->word = malloc_tad1D(size_element);
+printf("test");
     for(i=0; info[pos_x][i+pos_y] != '*'; i++)
     {
         a->word[i] = info[pos_x][i+pos_y];
     }
-    a->word[i] = '\0';
-
+    a->word[i+1] = '\0';
     pos_y = pos_y + i + 1;
 
     a->type = atoi(&info[pos_x][pos_y]);
@@ -79,7 +78,7 @@ tree creat_tree_save(tree a, char **info, int info_x, int info_y, int pos_x)
                 i++;
             }
 
-            tag = malloc_tad1D(size_element+1);
+            tag = malloc_tad1D(size_element);
 
             i=0;
             while(info[pos_x][i+pos_y] != '-' && info[pos_x][i+pos_y] != '*')
@@ -87,9 +86,9 @@ tree creat_tree_save(tree a, char **info, int info_x, int info_y, int pos_x)
                 tag[i] = info[pos_x][i+pos_y];
                 i++;
             }
-            tag[i] = '\0';
+            tag[i+1] = '\0';
 
-            if (tag_init == 0)
+            /*if (tag_init == 0)
             {
                 a->nexttag=init_new_tag(tag);
                 tag_init = 1;
@@ -97,7 +96,7 @@ tree creat_tree_save(tree a, char **info, int info_x, int info_y, int pos_x)
             else
             {
                 add_tag(a->nexttag, tag);
-            }
+            }*/
 
             pos_y = pos_y + i + 1;
 
@@ -127,10 +126,11 @@ tree init_tree_save()
 
         if (tab_id[0][0] == 0)
         {
-            a=creat_tree_save(a,tab_tree,size_tree_x,size_tree_y,0);
+            printf("deb");
+            creat_tree_save(a,tab_tree,size_tree_x,size_tree_y,0);
+            printf("fin");
             print_tree(a,0);
         }
-
     }
     else
     {

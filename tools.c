@@ -26,6 +26,20 @@ void freeTabChar(char **tab,int x_tab)///On libère la mémoire d'un tableau 2D
     free(tab);///On libère le tableau
 }
 
+char* malloc_tad1D(int size)
+{
+    char *tab=NULL;
+
+    tab = malloc(size * sizeof(char));
+
+    if (tab == NULL)
+    {
+        exit(0);
+    }
+
+    return tab;
+}
+
 void dossier_ou_fichier(tree a)
 {
     if (a->type==0) printf("Dossier ");
@@ -86,6 +100,7 @@ void browse_expl(tree a)
 void show_tags(taglist t)
 {
     printf("\nListe de tags pour cet item: ");
+    if(t == NULL) return;
     while (t->next)
     {
         printf("%s, ",t->word);

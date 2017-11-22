@@ -4,6 +4,7 @@
 
 void freeTabInt(int **tab,int x_tab); //On libère la mémoire d'un tableau 2D de int
 void freeTabChar(char **tab,int x_tab); //On libère la mémoire d'un tableau 2D de char
+char* malloc_tad1D(int size); //On alloue une chaine de caractère
 
 // FONCTIONS D'AFFICHAGE
 void dossier_ou_fichier(tree a);
