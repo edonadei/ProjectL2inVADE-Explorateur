@@ -13,6 +13,7 @@ typedef struct nodeId
     struct nodeId *next;
 } nodeId;
 
+
 // Structure de liste de tags
 
 typedef struct nodetag
@@ -35,6 +36,15 @@ typedef struct node
     struct node *next;    // point to next node at same level
 } node;
 
+typedef struct calend // Liste d'échéances
+{
+    struct nodetag *nexttag;
+    struct calend *next;
+    char *word;
+    int hour,day,emergency; // Coefficient "d'urgence"
+}calend;
+
+typedef calend *calendlist;
 typedef nodeId *Idlist;
 typedef nodetag *taglist;
 typedef node *tree;
@@ -675,6 +685,36 @@ tree add_child(tree n,char* node_name,int typechoice)
     else
         return (n->child = init_new_tree(node_name,typechoice,n)); // On envoie en paramètre l'adresse du père
 }
+// FONCTIONS DE GESTIONS DES ECHEANCES
+
+calendlist init_new_calend(char *name_of_calend,int heure,int jour, int importance)
+{
+    // printf("\ndebug\n");
+    calendlist new_calend = malloc(sizeof(calend));
+    new_calend->word=name_of_calend;
+    new_calend->nexttag=NULL;
+    new_calend->next=NULL;
+    new_calend->day=jour;
+    new_calend->hour=heure;
+    new_calend->emergency=importance;
+
+    return new_calend;
+}
+
+calendlist add_calend(calendlist t,char* name_of_calend, int heure,int jour, int importance)
+{
+    if (t==NULL)
+        return NULL;
+
+
+
+    while (t->next)
+    {
+        t=t->next;
+    }
+
+    return (t->next = init_new_calend(name_of_calend,heure,jour,importance));
+}
 
 // FONCTIONS DE GESTION DES TAGS
 
@@ -760,6 +800,69 @@ void browse_expl(tree a)
     //}
 }
 
+int compare_temps(int j1, int j2, int h1, int h2)
+{
+    if (j1>j2) return 1;
+    if (j1==j2 && h1>h2) return 1;
+    return 0;
+}
+
+void list_echeance(calendlist c, int h, int j,int nbr_iteration) // Fonction d'affichage des 10 premières échéances, à récupérer pour le calcul du score
+{
+if(nbr_iteration>0) // conditions d'arrêt
+    {
+        calendlist temp=c; // Var temporaire car on ne veut pas toucher à la struct de base
+
+        int jtemp=0, htemp=0;
+        char* stringtemp;
+
+        while ((jtemp==0 || htemp==0)&&(temp)) // Ici on s'assure que jtemp et htemp prennent bien les valeurs de la première date plus grande que nos j et h en argument
+            {
+                if (compare_temps(temp->day, j, temp->hour, h))
+                        {
+                            //printf("\nOn a trouve une valeur plus grande, je la range dans les temps !\n");
+                            jtemp=temp->day;
+                            htemp=temp->hour;
+                            stringtemp=temp->word;
+                        }
+                //printf("h %d et temp->hour %d,j %d et temp->day %d\n",h,temp->hour,j,temp->day);
+                //printf("premiere boucle %d,%d,%s\n",temp->day,temp->hour,temp->word);
+                //printf("contenu des variables temporaires: htemp %d jtemp %d\n",htemp, jtemp);
+                temp=temp->next;
+                //printf("iteration suivante \n\n");
+            }
+
+        // Ici on récupère la plus petite date qui reste supérieur à h et j au dessus
+
+        //printf("contenu des variables temporaires: htemp %d jtemp %d\n",htemp, jtemp);
+
+        while (temp)
+        {
+            int echeance_inf=0;
+            if (temp->day < jtemp && temp->day >= j && temp->hour>h) echeance_inf=1;
+            if (temp->day < jtemp && temp->day > j)
+            {
+            echeance_inf=1;
+            //printf("OK !");
+            }
+
+            if(echeance_inf)
+            {
+                jtemp=temp->day;
+                htemp=temp->hour;
+                stringtemp=temp->word;
+                // printf("\ndeuxieme boucle OK ! "); // debug
+            }
+            //printf("\niteration debug echeance inf=%d\n",echeance_inf);
+            //printf ("\ntemp->day %d,temp->hour %d,temp->word %s htemp %d, jtemp %d, h %d, j %d\n",temp->day,temp->hour,temp->word,htemp,jtemp,h,j);
+            temp=temp->next;
+        }
+
+        printf("\nNom: %s - Jour: %d - Heure: %d\n",stringtemp,jtemp,htemp);
+        list_echeance(c,htemp,jtemp,nbr_iteration-1); // On rappelle la fonction et on recommence ! Condition d'arrêt avec les itérations
+    }
+}
+
 void show_tags(taglist t)
 {
     printf("\nListe de tags pour cet item: ");
@@ -828,10 +931,22 @@ int main()
     printf("\nPere de l'element %s = %s \n",a->child->child->word,a->child->child->father->word);
 
     // Test de l 'affichage de tags
-    a->nexttag = init_new_tag("physique");
+    a->child->nexttag = init_new_tag("physique");
     add_tag(a->child->nexttag,"atome a la puce");
     add_tag(a->child->nexttag,"ce");
-    show_tags(a->nexttag);
+    show_tags(a->child->nexttag);
+
+    calendlist c=init_new_calend("CE d'atome a la puce",3,2,3);
+    add_calend(c,"DE d'information numerique",2,8,5);
+    add_calend(c,"Cours d'algebre lineraire",1,6,1);
+    add_calend(c,"Cours de communication",2,5,1);
+    add_calend(c,"CE d'anglais",3,7,3);
+    add_calend(c,"Cours d'anglais",4,6,1);
+    list_echeance(c,0,1,4);
+
+
+
+    // Test ID pour sauvegarde dans fichier txt
 
     tree b=init_new_tree("Emrick",0,NULL);
 
