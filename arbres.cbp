@@ -34,6 +34,19 @@
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="save.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="save.h" />
+		<Unit filename="struct_funct.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="struct_funct.h" />
+		<Unit filename="structure.h" />
+		<Unit filename="tools.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="tools.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />
