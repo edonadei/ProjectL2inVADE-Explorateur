@@ -185,6 +185,8 @@ tree add_child(tree n,char* node_name,int typechoice)
 
 // Fonctions de gestion des tags
 
+
+
 calendlist init_new_calend(char *name_of_calend,int heure,int jour, int importance)
 {
     // printf("\ndebug\n");
@@ -220,6 +222,22 @@ int compare_temps(int j1, int j2, int h1, int h2)
     if (j1>j2) return 1;
     if (j1==j2 && h1>h2) return 1;
     return 0;
+}
+
+int calcul_score(int h, int j, calendlist temp) // Calcul du "score" d'une échéance urgente
+{
+    //printf("\n Détail du calcul du score: \n");
+    if (j > temp->day) return 0; // Sécurité
+    if (j == temp-> day && h > temp->hour) return 0; // Sécurité contre des maillons plus vieux que celui étudié
+
+    int score,ecart_jours,ecart_heures,importance_critique;
+    ecart_jours=temp->day-j;
+    ecart_heures=temp->hour-h;
+    importance_critique=(50*temp->emergency);
+    // importance* 50, Nombre de jours divise le score, nombre d'heures retire un pourcentage
+    score=(((importance_critique)/ecart_jours)-(ecart_heures/importance_critique));
+    //printf("\n score: %d importance_critique %d, ecart jours %d, ecart heures %d",score,importance_critique,ecart_jours,ecart_heures);
+    return score;
 }
 
 void list_echeance(calendlist c, int h, int j,int nbr_iteration) // Fonction d'affichage des 10 premières échéances, à récupérer pour le calcul du score
@@ -277,5 +295,77 @@ if(nbr_iteration>0) // conditions d'arrêt
         list_echeance(c,htemp,jtemp,nbr_iteration-1); // On rappelle la fonction et on recommence ! Condition d'arrêt avec les itérations
     }
 }
+
+void _list_echeance_by_score(calendlist c, int h, int j,int nbr_iteration) // Fonction d'affichage des 10 premières échéances, à récupérer pour le calcul du score
+{
+//if (nbr_iteration==0) return;
+//printf("\niteration = %d\n",nbr_iteration);
+if(nbr_iteration>=1) // conditions d'arrêt
+    {
+        calendlist temp=c; // Var temporaire car on ne veut pas toucher à la struct de base
+        //calendlist prec=c; // Deuxième var temporaire pour garder marqueur sur le maillon précédent
+
+        int jtemp=0, htemp=0, scoretemp=0, i=0;
+        char* stringtemp;
+        scoretemp=calcul_score(h,j,temp); // On stocke la valeur de la première variable potable
+        jtemp=temp->day;
+        htemp=temp->hour;
+        stringtemp=temp->word;
+        calendlist prec = temp; // Besoin d'un marqueur temporaire de prec pour libération
+        calendlist temp2,prec2; // Se souvenir de l'emplacement du maillon le plus grand
+        temp=temp->next;
+
+        while (temp) // Deuxième boucle, on étudie le reste de la liste
+        {
+            // printf("\nOn compare le score du maillon en temp: %d et le score du maillon etudie: %d\n",scoretemp,calcul_score(h,j,temp));
+            if (calcul_score(h,j,temp)>scoretemp)
+            {
+                scoretemp=calcul_score(h,j,temp);
+                jtemp=temp->day;
+                htemp=temp->hour;
+                stringtemp=temp->word;
+                temp2=temp;
+                prec2=prec;
+                i++;
+            }
+            //printf("\nprec d: %d h: %d\n", prec->day, prec->hour);
+            //printf("\ntemp d: %d h: %d\n", temp->day, temp->hour);
+            //printf("\ntemp->next d: %d h: %d\n", temp->next->day, temp->next->hour);
+            prec=prec->next;
+            temp=temp->next;
+        }
+
+        printf("\nNom: %s - Jour: %d - Heure: %d - Score: %d\n",stringtemp,jtemp,htemp,scoretemp);
+
+        // Libération si premier maillon
+        if (i == 0)
+        {
+            //printf("\nmaillon du debut\n");
+            _list_echeance_by_score(c->next,h,j,nbr_iteration-1);
+        }
+
+        // Libération si dernier maillon de la liste
+        if (temp2->next==NULL)
+        {
+            //printf("\nmaillon de fin\n");
+            prec->next=NULL;
+            _list_echeance_by_score(c,h,j,nbr_iteration-1);
+        }
+
+        //printf("\nmaillon du milieu\n");
+        prec2->next=temp2->next; // Libération du maillon étudié
+        //printf("maillon que l'on veut liberer: d %d h %d, maintenant que c est fait, le next du prec = d %d h %d",temp2->day, temp2->hour,prec2->next->day, prec2->next->hour);
+        free(temp2);
+        // printf("\nmaillon du milieu\n");
+        _list_echeance_by_score(c,h,j,nbr_iteration-1); // On rappelle la fonction et on recommence ! Condition d'arrêt avec les itérations
+    }
+}
+
+void list_echeance_by_score(calendlist b, int h, int j,int nbr_iteration) // fonction chapeau
+{
+calendlist c=copy_lsc_calend(b); // On cherche à travailler sur une LSC que l'on peut charcuter le coeur libre
+_list_echeance_by_score(c,h,j,nbr_iteration);
+}
+
 
 

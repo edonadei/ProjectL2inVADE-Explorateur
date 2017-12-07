@@ -16,4 +16,6 @@ void _print_n_char(char c, int n);
 void print_array(char *t);
 void print_tree(tree a, int p);   // p = profondeur de l'arbre
 
+//Copie de LSC
+calendlist copy_lsc_calend(calendlist a);
 #endif // TOOLS_H_INCLUDED

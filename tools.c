@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "structure.h"
+#include "struct_funct.h"
 
 void freeTabInt(int **tab,int x_tab)///On libère la mémoire d'un tableau 2D
 {
@@ -139,4 +140,19 @@ void print_tree(tree a, int p)   // p = profondeur de l'arbre
             // On incrémente la profondeur lorsque l'on rajoute à la pile d'appel
         }
     }
+}
+
+calendlist copy_lsc_calend(calendlist a)
+{
+
+calendlist b = init_new_calend(a->word,a->hour,a->day,a->emergency);
+
+if (a->next) a=a->next;
+
+while (a)
+{
+add_calend(b,a->word,a->hour,a->day,a->emergency);
+a=a->next;
+}
+return b;
 }

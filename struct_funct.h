@@ -19,7 +19,9 @@ taglist add_tag(taglist t,char* name_of_tag);
 
 calendlist init_new_calend(char *name_of_calend,int heure,int jour, int importance);
 calendlist add_calend(calendlist t,char* name_of_calend, int heure,int jour, int importance);
+void _list_echeance_by_score(calendlist c, int h, int j,int nbr_iteration);
 void list_echeance(calendlist c, int h, int j,int nbr_iteration);
+void list_echeance_by_score(calendlist c, int h, int j,int nbr_iteration);
 int compare_temps(int j1, int j2, int h1, int h2);
 
 #endif // STRUCT_FUNCT_H_INCLUDED

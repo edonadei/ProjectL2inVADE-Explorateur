@@ -46,7 +46,12 @@ int main()
     add_calend(c,"Cours de communication",2,5,1);
     add_calend(c,"CE d'anglais",3,7,3);
     add_calend(c,"Cours d'anglais",4,6,1);
+    printf("\nListe d'echeance par date:\n");
     list_echeance(c,0,1,4);
+
+    // test affichage par système de scoring
+    printf("\nListe d'echeance par score:\n");
+    list_echeance_by_score(c,4,3,5);
 
     // Test ID pour sauvegarde dans fichier txt
 
