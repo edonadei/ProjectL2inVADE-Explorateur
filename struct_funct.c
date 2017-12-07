@@ -187,12 +187,15 @@ tree add_child(tree n,char* node_name,int typechoice)
 
 
 
-calendlist init_new_calend(char *name_of_calend,int heure,int jour, int importance)
+calendlist init_new_calend(char *name_of_calend,int heure,int jour, int importance, char* tag1, char* tag2, char* tag3)
 {
     // printf("\ndebug\n");
     calendlist new_calend = malloc(sizeof(calend));
     new_calend->word=name_of_calend;
-    new_calend->nexttag=NULL;
+    new_calend->nexttag=init_new_tag(tag1);
+    //add_tag(new_calend->nexttag,tag1);
+    add_tag(new_calend->nexttag,tag2);
+    add_tag(new_calend->nexttag,tag3);
     new_calend->next=NULL;
     new_calend->day=jour;
     new_calend->hour=heure;
@@ -202,7 +205,7 @@ calendlist init_new_calend(char *name_of_calend,int heure,int jour, int importan
 }
 
 
-calendlist add_calend(calendlist t,char* name_of_calend, int heure,int jour, int importance)
+calendlist add_calend(calendlist t,char* name_of_calend, int heure,int jour, int importance,char* tag1, char* tag2, char* tag3)
 {
     if (t==NULL)
         return NULL;
@@ -214,7 +217,7 @@ calendlist add_calend(calendlist t,char* name_of_calend, int heure,int jour, int
         t=t->next;
     }
 
-    return (t->next = init_new_calend(name_of_calend,heure,jour,importance));
+    return (t->next = init_new_calend(name_of_calend,heure,jour,importance,tag1,tag2,tag3));
 }
 
 int compare_temps(int j1, int j2, int h1, int h2)

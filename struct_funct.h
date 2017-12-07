@@ -17,8 +17,8 @@ taglist add_tag(taglist t,char* name_of_tag);
 
 // FONCTIONS DE GESTION DES CALENDRIERS
 
-calendlist init_new_calend(char *name_of_calend,int heure,int jour, int importance);
-calendlist add_calend(calendlist t,char* name_of_calend, int heure,int jour, int importance);
+calendlist init_new_calend(char *name_of_calend,int heure,int jour, int importance, char* tag1, char* tag2, char* tag3);
+calendlist add_calend(calendlist t,char* name_of_calend, int heure,int jour, int importance,char* tag1, char* tag2, char* tag3);
 void _list_echeance_by_score(calendlist c, int h, int j,int nbr_iteration);
 void list_echeance(calendlist c, int h, int j,int nbr_iteration);
 void list_echeance_by_score(calendlist c, int h, int j,int nbr_iteration);
