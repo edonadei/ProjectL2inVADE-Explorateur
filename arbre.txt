@@ -52,5 +52,3 @@
 4.2.1*cours*0**
 4.2.2*td*0**
 4.2.3*ce*0**
-2.6.2*Emrick*0*Chef de projet-Gars sympa-Homme stock*
-2.6.2*Emrick*0*Chef de projet-Gars sympa-Homme stock*

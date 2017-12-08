@@ -23,4 +23,10 @@ void list_echeance(calendlist c, int h, int j,int nbr_iteration);
 void list_echeance_by_score(calendlist c, int h, int j,int nbr_iteration);
 int compare_temps(int j1, int j2, int h1, int h2);
 
+// FONCTION DE GESTION DES FILTRES
+
+calendlist filtre_liste_echeance (calendlist a,char* tag1);
+calendlist _filtre_liste_echeance (calendlist c,char* tag1);
+int check_if_tag_exist(taglist a, char* tag1);
+
 #endif // STRUCT_FUNCT_H_INCLUDED

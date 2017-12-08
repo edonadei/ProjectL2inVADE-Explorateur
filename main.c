@@ -25,7 +25,7 @@ int main()
     add_calend(c,"DE d'information numerique",2,8,5,"informatique","information numerique","de");
     add_calend(c,"Cours d'algebre lineraire",1,6,1,"mathematiques","algebre lineaire","cours");
     add_calend(c,"Cours de communication",2,5,1,"general","communication","cours");
-    add_calend(c,"CE d'anglais",3,7,3,"general","anglais","CE");
+    add_calend(c,"CE d'anglais",3,7,3,"general","anglais","ce");
     add_calend(c,"Cours d'anglais",4,6,1,"general","anglais","cours");
     printf("\nListe d'echeance par date:\n");
     list_echeance(c,0,1,4);
@@ -36,10 +36,14 @@ int main()
     printf("\nListe d'echeance par score:\n");
     list_echeance_by_score(c,4,3,4);
 
-    // Test ID pour sauvegarde dans fichier txt
+    // test filtrage de la liste d'echeance
+    printf("\nListe d'echeance par score, avec tag favori -> general:\n");
+    calendlist d;
+    d=filtre_liste_echeance(c,"general");
+    list_echeance_by_score(d,4,3,4);
 
     // Test de de l'affichage d'enfant d'un dossier
-    browse_expl(a->child);
+    browse_expl(a->child->child);
 
     return 0;
 }

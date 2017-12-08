@@ -191,7 +191,7 @@ tree init_tree_save()
     }
     else
     {
-        printf("L'un des tableaux n'a pas était généré");
+        printf("L'un des tableaux n'a pas été généré");
         exit(0);
     }
 

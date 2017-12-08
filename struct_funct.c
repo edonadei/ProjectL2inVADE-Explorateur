@@ -262,5 +262,49 @@ calendlist c=copy_lsc_calend(b); // On cherche à travailler sur une LSC que l'on
 _list_echeance_by_score(c,h,j,nbr_iteration);
 }
 
+int check_if_tag_exist(taglist a, char* tag1)
+{
+    //printf("test");
+    if (a==NULL)
+        return 0;
+
+    //printf("\ntag actuel %s, tag a comparer %s\n",a->word,tag1);
+
+    if (strcmp(a->word,tag1)==0)
+    {
+        //printf("\ntag trouvé, on augmente le score\n");
+        return 1;
+    }
+
+    check_if_tag_exist(a->next,tag1);
+}
+
+calendlist _filtre_liste_echeance (calendlist c,char* tag1)
+{
+    if (c==NULL)
+        return c;
+
+    //printf("test");
+
+    int x=check_if_tag_exist(c->nexttag,tag1);
+
+    if (x == (1))
+    {
+        c->emergency=c->emergency*3;
+    }
+
+    //printf("test");
+
+    _filtre_liste_echeance(c->next,tag1);
+}
+
+calendlist filtre_liste_echeance (calendlist a,char* tag1)
+{
+    calendlist c=copy_lsc_calend(a);
+    //printf("test");
+    _filtre_liste_echeance(c,tag1);
+    return c;
+}
+
 
 

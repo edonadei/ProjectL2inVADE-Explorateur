@@ -155,14 +155,14 @@ void print_tree(tree a, int p)   // p = profondeur de l'arbre
 
 calendlist copy_lsc_calend(calendlist a)
 {
-
-    calendlist b = init_new_calend(a->word,a->hour,a->day,a->emergency,"NULL1","NULL2","NULL3");
+    //printf("\nJe vais copier %s %s %s\n",a->nexttag->word,a->nexttag->next->word,a->nexttag->next->next->word);
+    calendlist b = init_new_calend(a->word,a->hour,a->day,a->emergency,a->nexttag->word,a->nexttag->next->word,a->nexttag->next->next->word);
 
     if (a->next) a=a->next;
 
     while (a)
     {
-        add_calend(b,a->word,a->hour,a->day,a->emergency,"NULL1","NULL2","NULL3");
+        add_calend(b,a->word,a->hour,a->day,a->emergency,a->nexttag->word,a->nexttag->next->word,a->nexttag->next->next->word);
         a=a->next;
     }
     return b;
