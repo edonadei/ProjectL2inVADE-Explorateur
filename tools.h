@@ -1,7 +1,7 @@
 #ifndef TOOLS_H_INCLUDED
 #define TOOLS_H_INCLUDED
 // Libération de la mémoire
-
+void print_tree_all();
 void freeTabInt(int **tab,int x_tab); //On libère la mémoire d'un tableau 2D de int
 void freeTabChar(char **tab,int x_tab); //On libère la mémoire d'un tableau 2D de char
 char* malloc_tad1D(int size); //On alloue une chaine de caractère

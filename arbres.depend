@@ -8,7 +8,7 @@
 	"tools.h"
 	"struct_funct.h"
 
-1511374181 source:c:\users\dclae\documents\github\projectl2invade-explorateur\main.c
+1512743803 source:c:\users\dclae\documents\github\projectl2invade-explorateur\main.c
 	<stdio.h>
 	<string.h>
 	<stdlib.h>
@@ -16,28 +16,30 @@
 	"structure.h"
 	"tools.h"
 	"struct_funct.h"
+	"initialisation.h"
 
-1510595802 c:\users\dclae\documents\github\projectl2invade-explorateur\save.h
+1512729792 c:\users\dclae\documents\github\projectl2invade-explorateur\save.h
 	"structure.h"
 
-1510594898 c:\users\dclae\documents\github\projectl2invade-explorateur\structure.h
+1512729792 c:\users\dclae\documents\github\projectl2invade-explorateur\structure.h
 
-1510598232 source:c:\users\dclae\documents\github\projectl2invade-explorateur\save.c
+1512729792 source:c:\users\dclae\documents\github\projectl2invade-explorateur\save.c
 	<stdio.h>
 	<string.h>
 	<stdlib.h>
 	"structure.h"
 	"tools.h"
 
-1511374643 source:c:\users\dclae\documents\github\projectl2invade-explorateur\tools.c
+1512739383 source:c:\users\dclae\documents\github\projectl2invade-explorateur\tools.c
 	<stdio.h>
 	<string.h>
 	<stdlib.h>
 	"structure.h"
+	"struct_funct.h"
 
-1511374652 c:\users\dclae\documents\github\projectl2invade-explorateur\tools.h
+1512743523 c:\users\dclae\documents\github\projectl2invade-explorateur\tools.h
 
-1511375463 source:c:\users\dclae\documents\github\projectl2invade-explorateur\struct_funct.c
+1512743835 source:c:\users\dclae\documents\github\projectl2invade-explorateur\struct_funct.c
 	<stdio.h>
 	<string.h>
 	<stdlib.h>
@@ -45,7 +47,7 @@
 	"save.h"
 	"tools.h"
 
-1511374181 c:\users\dclae\documents\github\projectl2invade-explorateur\struct_funct.h
+1512730202 c:\users\dclae\documents\github\projectl2invade-explorateur\struct_funct.h
 
 1511428687 c:\users\emrick-pc-portable\documents\github\projectl2invade-explorateur\save.h
 	"structure.h"
@@ -77,4 +79,15 @@
 	<stdlib.h>
 	"structure.h"
 	"struct_funct.h"
+
+1512744085 source:c:\users\dclae\documents\github\projectl2invade-explorateur\initialisation.c
+	<stdio.h>
+	<string.h>
+	<stdlib.h>
+	"structure.h"
+	"tools.h"
+	"save.h"
+	"struct_funct.h"
+
+1512732732 c:\users\dclae\documents\github\projectl2invade-explorateur\initialisation.h
 
