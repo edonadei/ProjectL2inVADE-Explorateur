@@ -42,6 +42,12 @@ int main()
     d=filtre_liste_echeance(c,"general");
     list_echeance_by_score(d,4,3,4);
 
+    // Test de la récupération de fichiers
+
+    tree b=init_new_tree("racine",0,NULL);
+    recherche_fichier_selon_tags(a,b,"physique","atome a la puce","ce");
+
+
     // Test de de l'affichage d'enfant d'un dossier
     browse_expl(a->child->child);
 

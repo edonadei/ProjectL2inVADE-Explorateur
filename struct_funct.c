@@ -279,10 +279,10 @@ int check_if_tag_exist(taglist a, char* tag1)
     check_if_tag_exist(a->next,tag1);
 }
 
-calendlist _filtre_liste_echeance (calendlist c,char* tag1)
+void _filtre_liste_echeance (calendlist c,char* tag1)
 {
     if (c==NULL)
-        return c;
+        return;
 
     //printf("test");
 
@@ -306,5 +306,33 @@ calendlist filtre_liste_echeance (calendlist a,char* tag1)
     return c;
 }
 
+void recherche_fichier_selon_tags (tree a,tree b,char* tag1, char* tag2, char* tag3)
+{
+if (a==NULL)
+    return;
+
+printf("\non descend: %s\n",a->word);
+recherche_fichier_selon_tags(a->child,b,tag1,tag2,tag3);
+recherche_fichier_selon_tags(a->next,b,tag1,tag2,tag3);
 
 
+if (a->nexttag =! NULL)
+{
+    if (check_if_tag_exist(a,tag1))
+    {
+        if (check_if_tag_exist(a,tag2) || check_if_tag_exist(a,tag3))
+        {
+            printf("\n 2 tags trouvés\n");
+            b=a;
+            b=b->next;
+        }
+    }
+}
+return;
+}
+
+/*tree recherche_fichier_selon_tags (tree a, char* tag1, char* tag2, char*tag3)
+{
+
+}
+*/
