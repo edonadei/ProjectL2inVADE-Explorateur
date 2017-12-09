@@ -167,3 +167,89 @@ calendlist copy_lsc_calend(calendlist a)
     }
     return b;
 }
+
+char* number_to_hours(int i)
+{
+int creneau = i%5;
+char* string;
+switch(creneau)
+{
+    case 0:
+        string="08H-10H";
+        break;
+    case 1:
+        string="10H-12H";
+        break;
+    case 2:
+        string="12H-14H";
+        break;
+    case 3:
+        string="14H-16H";
+        break;
+    case 4:
+        string="16H-18H";
+        break;
+    case 5:
+        string="18H-20H";
+        break;
+}
+
+return string;
+}
+
+char* number_to_days(int i)
+{
+//int jour = i%30;
+int creneau = i%4;
+char* string;
+switch(creneau)
+{
+    case 0:
+        string="Lundi";
+        break;
+    case 1:
+        string="Mardi";
+        break;
+    case 2:
+        string="Mercredi";
+        break;
+    case 3:
+        string="Jeudi";
+        break;
+    case 4:
+        string="Vendredi";
+        break;
+}
+
+return string;
+}
+
+void menu(int h, int j, tree a, calendlist c)
+{
+    char* string;
+    int i=1;
+    calendlist d;
+    while(i)
+    {
+        //char* dateh,datej;
+        printf("\nCreneau actuel: ");
+        printf("%s ",number_to_days(j));
+        printf("%s\n",number_to_hours(h));
+
+        printf("\nListe d'echeance par date:\n");
+        list_echeance(c,h,j,4);
+        printf("\n-----------\n");
+        printf("\nListe d'echeance par score:\n");
+        list_echeance_by_score(c,h,j,2);
+        printf("\n-----------\n");
+        printf("\nChoisissez un tag que vous souhaitez mettre en avant: ");
+        scanf("%s",string);
+
+        d=filtre_liste_echeance(c,"general");
+        list_echeance_by_score(d,h,j,2);
+
+        printf("Souhaitez vous continuer(y/1 n/0): ");
+        scanf("%d",i);
+    }
+
+}

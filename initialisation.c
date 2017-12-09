@@ -42,7 +42,7 @@ tree creat_tree_save(tree a, char **info, int pos_x) //On initilialise un arbre 
 
     a->type = atoi(&info[pos_x][pos_y]);
 
-    if (a->type == 0)
+    if (a->type == 1)
     {
         pos_y = pos_y + 2;
 
@@ -73,10 +73,13 @@ tree creat_tree_save(tree a, char **info, int pos_x) //On initilialise un arbre 
             {
                 a->nexttag=init_new_tag(tag);
                 tag_init = 1;
+                //printf("\n%s %s\n",a->nexttag->word);
             }
             else
             {
+
                 add_tag(a->nexttag, tag);
+                //printf("\n%s\n",a->nexttag->word);
             }
 
             pos_y = pos_y + i + 1;

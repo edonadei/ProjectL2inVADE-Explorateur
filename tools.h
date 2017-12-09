@@ -15,6 +15,9 @@ void show_tags(taglist t);
 void _print_n_char(char c, int n);
 void print_array(char *t);
 void print_tree(tree a, int p);   // p = profondeur de l'arbre
+char* number_to_hours(int i);
+char* number_to_days(int i);
+void menu(int h, int j, tree a, calendlist c);
 
 //Copie de LSC
 calendlist copy_lsc_calend(calendlist a);

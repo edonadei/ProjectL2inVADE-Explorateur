@@ -186,7 +186,8 @@ if(nbr_iteration>0) // conditions d'arrêt
             temp=temp->next;
         }
 
-        printf("\nNom: %s - Jour: %d - Heure: %d\n",stringtemp,jtemp,htemp);
+        //printf("\n- %s - Jour: %d - Heure: %d",stringtemp,jtemp,htemp);
+        printf("\n- %s - %s %s",stringtemp,number_to_days(jtemp),number_to_hours(htemp));
         list_echeance(c,htemp,jtemp,nbr_iteration-1); // On rappelle la fonction et on recommence ! Condition d'arrêt avec les itérations
     }
 }
@@ -195,7 +196,7 @@ void _list_echeance_by_score(calendlist c, int h, int j,int nbr_iteration) // Fo
 {
 //if (nbr_iteration==0) return;
 //printf("\niteration = %d\n",nbr_iteration);
-if(nbr_iteration>=1) // conditions d'arrêt
+if(nbr_iteration>0) // conditions d'arrêt
     {
         calendlist temp=c; // Var temporaire car on ne veut pas toucher à la struct de base
         //calendlist prec=c; // Deuxième var temporaire pour garder marqueur sur le maillon précédent
@@ -230,12 +231,12 @@ if(nbr_iteration>=1) // conditions d'arrêt
             temp=temp->next;
         }
 
-        printf("\nNom: %s - Jour: %d - Heure: %d - Score: %d\n",stringtemp,jtemp,htemp,scoretemp);
+        printf("\n- %s - Jour: %d - Heure: %d - Score: %d",stringtemp,jtemp,htemp,scoretemp);
 
         // Libération si premier maillon
         if (i == 0)
         {
-            //printf("\nmaillon du debut\n");
+            printf("\nmaillon du debut\n");
             _list_echeance_by_score(c->next,h,j,nbr_iteration-1);
         }
 
@@ -253,6 +254,8 @@ if(nbr_iteration>=1) // conditions d'arrêt
         free(temp2);
         // printf("\nmaillon du milieu\n");
         _list_echeance_by_score(c,h,j,nbr_iteration-1); // On rappelle la fonction et on recommence ! Condition d'arrêt avec les itérations
+
+        //printf("\nmaillon du milieu\n");
     }
 }
 
@@ -270,6 +273,7 @@ int check_if_tag_exist(taglist a, char* tag1)
 
     //printf("\ntag actuel %s, tag a comparer %s\n",a->word,tag1);
 
+    //printf("test %s",tag1);
     if (strcmp(a->word,tag1)==0)
     {
         //printf("\ntag trouvé, on augmente le score\n");
@@ -318,9 +322,11 @@ recherche_fichier_selon_tags(a->next,b,tag1,tag2,tag3);
 
 if (a->nexttag =! NULL)
 {
-    if (check_if_tag_exist(a,tag1))
+    //printf("test");
+    int i = check_if_tag_exist(a->nexttag,tag1);
+    if (i)
     {
-        if (check_if_tag_exist(a,tag2) || check_if_tag_exist(a,tag3))
+        if (check_if_tag_exist(a->nexttag,tag2) || check_if_tag_exist(a->nexttag,tag3))
         {
             printf("\n 2 tags trouvés\n");
             b=a;
@@ -330,6 +336,7 @@ if (a->nexttag =! NULL)
 }
 return;
 }
+
 
 /*tree recherche_fichier_selon_tags (tree a, char* tag1, char* tag2, char*tag3)
 {
