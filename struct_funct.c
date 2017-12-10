@@ -197,7 +197,7 @@ if(nbr_iteration>0) // conditions d'arrêt
 void _list_echeance_by_score(calendlist c, int h, int j,int nbr_iteration) // Fonction d'affichage des 10 premières échéances, à récupérer pour le calcul du score
 {
 //if (nbr_iteration==0) return;
-printf("\niteration = %d\n",nbr_iteration);
+//printf("\niteration = %d\n",nbr_iteration);
 if(nbr_iteration>0) // conditions d'arrêt
     {
         calendlist temp=c; // Var temporaire car on ne veut pas toucher à la struct de base
@@ -285,7 +285,7 @@ int check_if_tag_exist(taglist a, char* tag1)
         return 1;
     }
 
-    check_if_tag_exist(a->next,tag1);
+    return check_if_tag_exist(a->next,tag1);
 }
 
 void _filtre_liste_echeance (calendlist c,char* tag1)
@@ -324,8 +324,8 @@ if (a==NULL)
 recherche_fichier_selon_tags(a->child,b,tag1,tag2,tag3);
 recherche_fichier_selon_tags(a->next,b,tag1,tag2,tag3);
 
+if (a->nexttag == NULL);
 
-if (a->nexttag == NULL) ;
 else
 {
     int i = check_if_tag_exist(a->nexttag,tag1);
@@ -334,18 +334,27 @@ else
     {
         if (check_if_tag_exist(a->nexttag,tag2) && check_if_tag_exist(a->nexttag,tag3)) // Documents du même type et de la même matiere
         {
-            printf("\n 2 tags trouves\n");
+            //printf("\n 2 tags trouves\n");
             add_child(b,a->word,0);
+            b->nexttag=a->nexttag;
+            /*b->nexttag=init_new_tag(a->nexttag->word);
+            //printf("\ndebug b->nexttag %s a->nexttag\n",b-W);
+            add_tag(b->nexttag,a->nexttag->next->word);
+            add_tag(b->nexttag,a->nexttag->next->next->word);
+            //b->arbo=arborescence_string(a);*/
             b=b->child;
         }
 
         if (check_if_tag_exist(a->nexttag,tag2)) // Documents de la meme matiere
         {
-            printf("\n2 tags trouves\n");
+            //printf("\n2 tags trouves\n");
             add_child(b,a->word,0);
-            //printf("\n%s\n",b->word);
+            b->nexttag=a->nexttag;
+            /*b->nexttag=init_new_tag(a->nexttag->word);
+            add_tag(b->nexttag,a->nexttag->next->word);
+            add_tag(b->nexttag,a->nexttag->next->next->word);
+            printf("\n%s\n",b->word);*/
             b=b->child;
-
         }
     }
 }

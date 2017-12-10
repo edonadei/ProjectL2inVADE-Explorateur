@@ -18,6 +18,8 @@ void print_tree(tree a, int p);   // p = profondeur de l'arbre
 char* number_to_hours(int i);
 char* number_to_days(int i);
 void menu(int h, int j, tree a, calendlist c);
+char* arborescence_string(tree a);
+char *print_tag_echeance(tree a);
 
 //Copie de LSC
 calendlist copy_lsc_calend(calendlist a);

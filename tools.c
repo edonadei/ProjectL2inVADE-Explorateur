@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include "structure.h"
 #include "struct_funct.h"
+#define SIZE 47
 
 void print_tree_all(tree a)
 {
@@ -94,6 +95,30 @@ void arborescence(tree a)
         i--;
     }
 
+}
+
+char* arborescence_string(tree a)
+{
+    char* str;
+    strcpy(str, "");
+    int i=0;
+    while(a->father)
+    {
+        a=a->father;
+        i++;
+    }
+
+    while (i!=-1)
+    {
+
+        //strcat(str,(">%s",a->word));
+        strcat(str,">");
+        strcat(str,a->word);
+        a=a->child;
+        i--;
+    }
+
+return str;
 }
 
 void browse_expl(tree a)
@@ -224,6 +249,53 @@ switch(creneau)
 return string;
 }
 
+char *print_tag_echeance(tree a)
+{
+    int i,pos=0;
+    int tag_entier=0; //Check si tag a été affiché en entier
+
+    char* info = "Details: ";
+    char* string_tag = malloc((SIZE+2)*sizeof(char));
+
+    for (i=0; info[i] != '\0'; i++)
+    {
+        string_tag[i] = info[i];
+    }
+    pos = pos + i;
+    //printf("%s", a->nexttag->next->word);
+    taglist l = a->nexttag;
+    for(i=pos; i<SIZE; i++)
+    {
+        if (a->nexttag->word[i-pos] == '\0')
+        {
+            if (a->nexttag->next != NULL)
+            {
+                a->nexttag = a->nexttag->next;
+                string_tag[i] = ',';
+                pos = i+1;
+            }
+            tag_entier= 0;
+        }
+        else
+        {
+            tag_entier = 1;
+            string_tag[i] = a->nexttag->word[i-pos];
+        }
+    }
+    if (tag_entier == 1)
+    {
+        string_tag[SIZE]='.';
+        string_tag[SIZE-1]='.';
+        string_tag[SIZE-2]='.';
+    }
+    a->nexttag = l;
+
+    string_tag[SIZE+1] = '\0';
+
+    return string_tag;
+}
+
+/*
 void menu(int h, int j, tree a, calendlist c)
 {
     char* string;
@@ -249,7 +321,8 @@ void menu(int h, int j, tree a, calendlist c)
         list_echeance_by_score(d,h,j,2);
 
         printf("Souhaitez vous continuer(y/1 n/0): ");
-        scanf("%d",i);
+        scanf("%d",&i);
     }
 
 }
+*/

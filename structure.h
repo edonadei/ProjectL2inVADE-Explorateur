@@ -23,6 +23,7 @@ typedef struct nodetag
 typedef struct node
 {
     char *word;
+    char *arbo;
     int depth, type;  // 0 for folder, 1 for file
 
     struct nodeId *nextId;
