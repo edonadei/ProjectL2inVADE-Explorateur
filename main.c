@@ -14,7 +14,7 @@ int main()
 {
     int h=1,j=1,i=1;
     calendlist d;
-    char arbo[47];
+    //char arbo[47];
 
     // INITIALISATION DE L'ARBRE
     tree a=init_tree_save();
@@ -51,18 +51,17 @@ int main()
         printf("\nChoisissez un tag que vous souhaitez mettre en avant:\n\n_Physique\n_Informatique\n_Mathematiques\n_General\n");
         printf("\n-----------\n");
         printf("\nNouvelle liste d'echeance par score:\n");
-        d=filtre_liste_echeance(c,"physique");
+        d=filtre_liste_echeance(c,"cours","communication");
         list_echeance_by_score(d,h,j,2);
         printf("\n\n-----------\n");
         printf("\nSouhaitez vous continuer(y/1 n/0): ");
         scanf("%d",&i);
     };
 
-    // test filtrage de la liste d'echeance
-    printf("\nListe d'echeance par score, avec tag favori -> general:\n");
-    list_echeance_by_score(d,4,3,4);
+    //listnode b=init_new_lscnode(a);
+    //recherche_fichier_selon_tags_v2(a,b,"physique","champs electromagnetiques","ce");
 
-    // Test de la récupération de fichiers
+     //Test de la récupération de fichiers
     tree b=init_new_tree("racine",0,NULL);
     recherche_fichier_selon_tags(a,b,"physique","champs electromagnetiques","ce");
     print_tree_all(b);
@@ -72,11 +71,11 @@ int main()
 
 
     //arbo=arborescence_string(b->child->child);
-    printf("%s",arborescence_string(b->child->child));
-    sprintf(arbo,"\n%s",arborescence_string(b->child->child));
-    printf("%s",arbo);
+    //printf("%s",arborescence_string(b->child));
+    //sprintf(arbo,"\n%s",arborescence_string(b->child->child));
+    //printf("%s",arbo);
 
-    //show_tags(b->next->nexttag);
+    //show_tags(b->next->arbre->nexttag);
 
     return 0;
 }

@@ -46,6 +46,13 @@ typedef nodeId *Idlist;
 typedef nodetag *taglist;
 typedef node *tree;
 
+typedef struct lscnode
+{
+    tree arbre;
+    struct lscnode *next;
+}lscnode;
+
+typedef lscnode *listnode;
 
 
 #endif // STRUCTURE_H_INCLUDED

@@ -30,7 +30,29 @@ taglist add_tag(taglist t,char* name_of_tag)
 
 // FONCTION DE GESTION DE L'ARBRE
 
+listnode init_new_lscnode(tree a)
+{
+    listnode new_list_of_nodes = malloc(sizeof(lscnode));
 
+    if (new_list_of_nodes)
+    {
+        new_list_of_nodes->next=NULL;
+        new_list_of_nodes->arbre=NULL;
+    }
+
+    return new_list_of_nodes;
+}
+
+listnode add_listnodes(listnode l, tree a)
+{
+    if (l==NULL)
+        return NULL;
+
+    while(l->next)
+        l=l->next;
+
+    return (l->next = init_new_lscnode(a));
+}
 
 tree init_new_tree(char* name_of_tree, int typechoice,tree father)
 {
@@ -288,7 +310,7 @@ int check_if_tag_exist(taglist a, char* tag1)
     return check_if_tag_exist(a->next,tag1);
 }
 
-void _filtre_liste_echeance (calendlist c,char* tag1)
+void _filtre_liste_echeance (calendlist c,char* tag1,char* tag2)
 {
     if (c==NULL)
         return;
@@ -302,16 +324,24 @@ void _filtre_liste_echeance (calendlist c,char* tag1)
         c->emergency=c->emergency*3;
     }
 
+    x=0;
+
+    x=check_if_tag_exist(c->nexttag,tag2);
+
+    if (x == (1))
+    {
+        c->emergency=c->emergency*3;
+    }
     //printf("test");
 
-    _filtre_liste_echeance(c->next,tag1);
+    _filtre_liste_echeance(c->next,tag1,tag2);
 }
 
-calendlist filtre_liste_echeance (calendlist a,char* tag1)
+calendlist filtre_liste_echeance (calendlist a,char* tag1, char* tag2)
 {
     calendlist c=copy_lsc_calend(a);
     //printf("test");
-    _filtre_liste_echeance(c,tag1);
+    _filtre_liste_echeance(c,tag1,tag2);
     return c;
 }
 
@@ -339,22 +369,62 @@ else
             b->nexttag=a->nexttag;
             /*b->nexttag=init_new_tag(a->nexttag->word);
             //printf("\ndebug b->nexttag %s a->nexttag\n",b-W);
+
             add_tag(b->nexttag,a->nexttag->next->word);
             add_tag(b->nexttag,a->nexttag->next->next->word);
             //b->arbo=arborescence_string(a);*/
-            b=b->child;
         }
 
-        if (check_if_tag_exist(a->nexttag,tag2)) // Documents de la meme matiere
+        else if (check_if_tag_exist(a->nexttag,tag2)) // Documents de la meme matiere
         {
             //printf("\n2 tags trouves\n");
             add_child(b,a->word,0);
             b->nexttag=a->nexttag;
             /*b->nexttag=init_new_tag(a->nexttag->word);
             add_tag(b->nexttag,a->nexttag->next->word);
+            add_tag(b->nexttag,a->nexttag->next->next->word);*/
+        }
+    }
+}
+return;
+}
+
+void recherche_fichier_selon_tags_v2 (tree a,listnode b,char* tag1, char* tag2, char* tag3)
+{
+if (a==NULL)
+    return;
+
+//printf("\non descend: %s\n",a->word);
+recherche_fichier_selon_tags(a->child,b,tag1,tag2,tag3);
+recherche_fichier_selon_tags(a->next,b,tag1,tag2,tag3);
+
+if (a->nexttag == NULL);
+
+else
+{
+    int i = check_if_tag_exist(a->nexttag,tag1);
+
+    if (i)
+    {
+        if (check_if_tag_exist(a->nexttag,tag2) && check_if_tag_exist(a->nexttag,tag3)) // Documents du même type et de la même matiere
+        {
+            //printf("\n 2 tags trouves\n");
+            add_listnodes(b,a);
+            /*b->nexttag=init_new_tag(a->nexttag->word);
+            //printf("\ndebug b->nexttag %s a->nexttag\n",b-W);
+
+            add_tag(b->nexttag,a->nexttag->next->word);
             add_tag(b->nexttag,a->nexttag->next->next->word);
-            printf("\n%s\n",b->word);*/
-            b=b->child;
+            //b->arbo=arborescence_string(a);*/
+        }
+
+        else if (check_if_tag_exist(a->nexttag,tag2)) // Documents de la meme matiere
+        {
+            //printf("\n2 tags trouves\n");
+            add_listnodes(b,a);
+            /*b->nexttag=init_new_tag(a->nexttag->word);
+            add_tag(b->nexttag,a->nexttag->next->word);
+            add_tag(b->nexttag,a->nexttag->next->next->word);*/
         }
     }
 }
@@ -362,8 +432,3 @@ return;
 }
 
 
-/*tree recherche_fichier_selon_tags (tree a, char* tag1, char* tag2, char*tag3)
-{
-
-}
-*/

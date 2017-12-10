@@ -23,4 +23,6 @@ char *print_tag_echeance(tree a);
 
 //Copie de LSC
 calendlist copy_lsc_calend(calendlist a);
+listnode add_listnodes(listnode l, tree a);
+
 #endif // TOOLS_H_INCLUDED
