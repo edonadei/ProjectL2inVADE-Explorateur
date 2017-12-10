@@ -23,6 +23,9 @@ int main()
     // Test initialisation arbre
     tree a=init_tree_save();
 
+    printf("Nom du fichier: %s\n", a->child->next->child->next->child->child->word);
+    show_tags(a->child->next->child->next->child->child->nexttag);
+
     //print_tree_all(a);
 
     // Test de l 'affichage de tags

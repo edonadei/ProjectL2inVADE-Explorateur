@@ -83,9 +83,11 @@ tree creat_tree_save(tree a, char **info, int pos_x) //On initilialise un arbre 
             }
 
             pos_y = pos_y + i + 1;
-
-            free(tag);
         }
+    }
+    else
+    {
+        a->nexttag = NULL;
     }
     return a;
 }
