@@ -126,10 +126,12 @@ int calcul_score(int h, int j, calendlist temp) // Calcul du "score" d'une échéa
     if (j == temp-> day && h > temp->hour) return 0; // Sécurité contre des maillons plus vieux que celui étudié
 
     int score,ecart_jours,ecart_heures,importance_critique;
-    ecart_jours=temp->day-j;
-    ecart_heures=temp->hour-h;
+    ecart_jours=temp->day-j+1;
+    ecart_heures=temp->hour-h+1;
     importance_critique=(50*temp->emergency);
     // importance* 50, Nombre de jours divise le score, nombre d'heures retire un pourcentage
+    //printf("\n importance_critique %d, ecart jours %d, ecart heures %d",importance_critique,ecart_jours,ecart_heures);
+
     score=(((importance_critique)/ecart_jours)-(ecart_heures/importance_critique));
     //printf("\n score: %d importance_critique %d, ecart jours %d, ecart heures %d",score,importance_critique,ecart_jours,ecart_heures);
     return score;
@@ -195,15 +197,18 @@ if(nbr_iteration>0) // conditions d'arrêt
 void _list_echeance_by_score(calendlist c, int h, int j,int nbr_iteration) // Fonction d'affichage des 10 premières échéances, à récupérer pour le calcul du score
 {
 //if (nbr_iteration==0) return;
-//printf("\niteration = %d\n",nbr_iteration);
+printf("\niteration = %d\n",nbr_iteration);
 if(nbr_iteration>0) // conditions d'arrêt
     {
         calendlist temp=c; // Var temporaire car on ne veut pas toucher à la struct de base
         //calendlist prec=c; // Deuxième var temporaire pour garder marqueur sur le maillon précédent
 
+        //printf("\ntemp->next d: %d h: %d\n", temp->next->day, temp->next->hour);
+
         int jtemp=0, htemp=0, scoretemp=0, i=0;
         char* stringtemp;
         scoretemp=calcul_score(h,j,temp); // On stocke la valeur de la première variable potable
+        //printf("\ntemp->next d: %d h: %d\n", temp->next->day, temp->next->hour);
         jtemp=temp->day;
         htemp=temp->hour;
         stringtemp=temp->word;
@@ -226,7 +231,7 @@ if(nbr_iteration>0) // conditions d'arrêt
             }
             //printf("\nprec d: %d h: %d\n", prec->day, prec->hour);
             //printf("\ntemp d: %d h: %d\n", temp->day, temp->hour);
-            //printf("\ntemp->next d: %d h: %d\n", temp->next->day, temp->next->hour);
+
             prec=prec->next;
             temp=temp->next;
         }
@@ -236,7 +241,7 @@ if(nbr_iteration>0) // conditions d'arrêt
         // Libération si premier maillon
         if (i == 0)
         {
-            printf("\nmaillon du debut\n");
+            //printf("\nmaillon du debut\n");
             _list_echeance_by_score(c->next,h,j,nbr_iteration-1);
         }
 
@@ -276,7 +281,7 @@ int check_if_tag_exist(taglist a, char* tag1)
     //printf("test %s",tag1);
     if (strcmp(a->word,tag1)==0)
     {
-        //printf("\ntag trouvé, on augmente le score\n");
+        //printf("\ntag trouve, on augmente le score\n");
         return 1;
     }
 
@@ -320,10 +325,11 @@ recherche_fichier_selon_tags(a->child,b,tag1,tag2,tag3);
 recherche_fichier_selon_tags(a->next,b,tag1,tag2,tag3);
 
 
-if (a->nexttag =! NULL)
+if (a->nexttag->next =! NULL)
 {
-    //printf("test");
+
     int i = check_if_tag_exist(a->nexttag,tag1);
+    printf("test");
     if (i)
     {
         if (check_if_tag_exist(a->nexttag,tag2) || check_if_tag_exist(a->nexttag,tag3))
@@ -331,6 +337,7 @@ if (a->nexttag =! NULL)
             printf("\n 2 tags trouvés\n");
             b=a;
             b=b->next;
+
         }
     }
 }
