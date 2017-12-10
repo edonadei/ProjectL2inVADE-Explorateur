@@ -89,8 +89,10 @@ int main()
     // Test de la récupération de fichiers
 
     tree b=init_new_tree("racine",0,NULL);
-    recherche_fichier_selon_tags(a,b,"physique","atome a la puce","ce");
-
+    recherche_fichier_selon_tags(a,b,"physique","champs electromagnetiques","ce");
+    print_tree_all(b);
+    //printf("\n%s\n",b->word);
+    //printf("\n%s %s %s\n",b->word,b->next->word,b->next->word);
 
     // Test de de l'affichage d'enfant d'un dossier
     browse_expl(a->child->child);

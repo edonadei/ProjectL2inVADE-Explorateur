@@ -320,23 +320,31 @@ void recherche_fichier_selon_tags (tree a,tree b,char* tag1, char* tag2, char* t
 if (a==NULL)
     return;
 
-printf("\non descend: %s\n",a->word);
+//printf("\non descend: %s\n",a->word);
 recherche_fichier_selon_tags(a->child,b,tag1,tag2,tag3);
 recherche_fichier_selon_tags(a->next,b,tag1,tag2,tag3);
 
 
-if (a->nexttag->next =! NULL)
+if (a->nexttag == NULL) ;
+else
 {
-
     int i = check_if_tag_exist(a->nexttag,tag1);
-    printf("test");
+
     if (i)
     {
-        if (check_if_tag_exist(a->nexttag,tag2) || check_if_tag_exist(a->nexttag,tag3))
+        if (check_if_tag_exist(a->nexttag,tag2) && check_if_tag_exist(a->nexttag,tag3)) // Documents du même type et de la même matiere
         {
-            printf("\n 2 tags trouvés\n");
-            b=a;
-            b=b->next;
+            printf("\n 2 tags trouves\n");
+            add_child(b,a->word,0);
+            b=b->child;
+        }
+
+        if (check_if_tag_exist(a->nexttag,tag2)) // Documents de la meme matiere
+        {
+            printf("\n2 tags trouves\n");
+            add_child(b,a->word,0);
+            //printf("\n%s\n",b->word);
+            b=b->child;
 
         }
     }

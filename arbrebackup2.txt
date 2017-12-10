@@ -1,0 +1,175 @@
+0*root*0**
+1*physique*0**
+1.1*atome a la puce*0**
+1.1.1*cours*0**
+1.1.1.1*cours1*1*physique-atome a la puce-cours*
+1.1.1.2*cours2*1*physique-atome a la puce-cours*
+1.1.1.3*cours3*1*physique-atome a la puce-cours*
+1.1.2*td*0**
+1.1.2.1*td1*1*physique-atome a la puce*td*
+1.1.2.2*td2*1*physique-atome a la puce-td*
+1.1.2.3*td3*1*physique-atome a la puce-td*
+1.1.3*ce*0**
+1.1.3.1*ce1*1*physique-atome a la puce-ce*
+1.1.3.2*ce2*1*physique-atome a la puce-ce*
+1.1.3.3*ce3*1*physique-atome a la puce-ce*
+1.1.4*de*0**
+1.1.4.1*de1*1*physique-atome a la puce-de*
+1.1.4.2*de2*1*physique-atome a la puce-de*
+1.1.4.3*de3*1*physique-atome a la puce-de*
+1.2*information numerique*0**
+1.2.1*cours*0**
+1.2.1.1*cours1*1*physique-information numerique-cours*
+1.2.1.2*cours2*1*physique-information numerique-cours*
+1.2.1.3*cours3*1*physique-information numerique-cours*
+1.2.2*td*0**
+1.2.2.1*td1*1*physique-information numerique-td*
+1.2.2.2*td2*1*physique-information numerique-td*
+1.2.2.3*td3*1*physique-information numerique-td*
+1.2.3*ce*0**                                    
+1.2.3.1*ce1*1*physique-information numerique-ce*
+1.2.3.2*ce2*1*physique-information numerique-ce*
+1.2.3.3*ce3*1*physique-information numerique-ce*
+1.2.4*de*0**
+1.2.4.1*de1*1*physique-information numerique-de*
+1.2.4.2*de2*1*physique-information numerique-de*
+1.2.4.3*de3*1*physique-information numerique-de*
+1.3*electricite generale*0**
+1.3.1*cours*0**
+1.3.1.1*cours1*1*physique-electricite generale-cours*
+1.3.1.2*cours2*1*physique-electricite generale-cours*
+1.3.1.3*cours3*1*physique-electricite generale-cours*
+1.3.2*td*0**
+1.3.2.1*td1*1*physique-electricite generale-td*
+1.3.2.2*td2*1*physique-electricite generale-td*
+1.3.2.3*td3*1*physique-electricite generale-td*
+1.3.3*ce*0**
+1.3.3.1*ce1*1*physique-electricite generale-ce*
+1.3.3.2*ce2*1*physique-electricite generale-ce*
+1.3.3.3*ce3*1*physique-electricite generale-ce*
+1.3.4*de*0**
+1.3.4.1*de1*1*physique-electricite generale-de*
+1.3.4.2*de2*1*physique-electricite generale-de*
+1.3.4.3*de3*1*physique-electricite generale-de*
+2*informatique*0**
+2.1*algorithmique*0**
+2.1.1*cours*0**
+2.1.1.1*cours1*1*informatique-algorithmique-cours*
+2.1.1.2*cours2*1*informatique-algorithmique-cours*
+2.1.1.3*cours3*1*informatique-algorithmique-cours*
+2.1.2*td*0**
+2.1.2.1*td1*1*informatique-algorithmique-td*
+2.1.2.2*td2*1*informatique-algorithmique-td*
+2.1.2.3*td3*1*informatique-algorithmique-td*
+2.1.3*ce*0**
+2.1.1.1*ce1*1*informatique-algorithmique-ce*
+2.1.1.2*ce2*1*informatique-algorithmique-ce*
+2.1.1.3*ce3*1*informatique-algorithmique-ce*
+2.1.4*de*0**
+2.1.4.1*de1*1*informatique-algorithmique-de*
+2.1.4.2*de2*1*informatique-algorithmique-de*
+2.1.4.3*de3*1*informatique-algorithmique-de*
+2.2*programmation*0**
+2.2.1*cours*0**
+2.2.1.1*cours1*1*informatique-programmation-cours*
+2.2.1.2*cours2*1*informatique-programmation-cours*
+2.2.1.3*cours3*1*informatique-programmation-cours*
+2.2.2*td*0**
+2.2.2.1*td1*1*informatique-programmation-td*
+2.2.2.2*td2*1*informatique-programmation-td*
+2.2.2.3*td3*1*informatique-programmation-td*
+2.2.3*ce*0**
+2.2.1.1*ce1*1*informatique-programmation-ce*
+2.2.1.2*ce2*1*informatique-programmation-ce*
+2.2.1.3*ce3*1*informatique-programmation-ce*
+2.2.4*de*0**
+2.2.4.1*de1*1*informatique-programmation-de*
+2.2.4.2*de2*1*informatique-programmation-de*
+2.2.4.3*de3*1*informatique-programmation-de*
+3*mathematiques*0**
+3.1*fonctions et variations*0**
+3.1.1*cours*0**
+3.1.1.1*cours1*1*mathematiques-fonctions et variations-cours*
+3.1.1.2*cours2*1*mathematiques-fonctions et variations-cours*
+3.1.1.3*cours3*1*mathematiques-fonctions et variations-cours*
+3.1.2*td*0**
+3.1.2.1*td1*1*mathematiques-fonctions et variations-td*
+3.1.2.2*td2*1*mathematiques-fonctions et variations-td*
+3.1.2.3*td3*1*mathematiques-fonctions et variations-td*
+3.1.3*ce*0**
+3.1.3.1*ce1*1*mathematiques-fonctions et variations-ce*
+3.1.3.2*ce2*1*mathematiques-fonctions et variations-ce*
+3.1.3.3*ce3*1*mathematiques-fonctions et variations-ce*
+3.1.4*de*0**
+3.1.4.1*de1*1*mathematiques-fonctions et variations-de*
+3.1.4.2*de2*1*mathematiques-fonctions et variations-de*
+3.1.4.3*de3*1*mathematiques-fonctions et variations-de*
+3.2*nombres et structures*0**
+3.2.1*cours*0**
+3.2.1.1*cours1*1*mathematiques-nombres et structures-cours*
+3.2.1.2*cours2*1*mathematiques-nombres et structures-cours*
+3.2.1.3*cours3*1*mathematiques-nombres et structures-cours*
+3.2.2*td*0**
+3.2.2.1*td1*1*mathematiques-nombres et structures-td*
+3.2.2.2*td2*1*mathematiques-nombres et structures-td*
+3.2.2.3*td3*1*mathematiques-nombres et structures-td*
+3.2.3*ce*0**
+3.2.3.1*ce1*1*mathematiques-nombres et structures-ce*
+3.2.3.2*ce2*1*mathematiques-nombres et structures-ce*
+3.2.3.3*ce3*1*mathematiques-nombres et structures-ce*
+3.2.4*de*0**
+3.2.4.1*de1*1*mathematiques-nombres et structures-de*
+3.2.4.2*de2*1*mathematiques-nombres et structures-de*
+3.2.4.3*de3*1*mathematiques-nombres et structures-de*
+3.3*algebre lineaire*0**
+3.3.1*cours*0**
+3.3.1.1*cours1*1*mathematiques-algebre lineaire-cours*
+3.3.1.2*cours2*1*mathematiques-algebre lineaire-cours*
+3.3.1.3*cours3*1*mathematiques-algebre lineaire-cours*
+3.3.2*td*0**
+3.3.2.1*td1*1*mathematiques-algebre lineaire-td*
+3.3.2.2*td2*1*mathematiques-algebre lineaire-td*
+3.3.2.3*td3*1*mathematiques-algebre lineaire-td*
+3.3.3*ce*0**
+3.3.3.1*ce1*1*mathematiques-algebre lineaire-ce*
+3.3.3.2*ce2*1*mathematiques-algebre lineaire-ce*
+3.3.3.3*ce3*1*mathematiques-algebre lineaire-ce*
+3.3.4*de*0**
+3.3.4.1*de1*1*mathematiques-algebre lineaire-de*
+3.3.4.2*de2*1*mathematiques-algebre lineaire-de*
+3.3.4.3*de3*1*mathematiques-algebre lineaire-de*
+4*general*0**
+4.1*anglais*0**
+4.1.1*cours*0**
+4.1.1.1*cours1*1*general-anglais-cours*
+4.1.1.2*cours2*1*general-anglais-cours*
+4.1.1.3*cours3*1*general-anglais-cours*
+4.1.2*td*0**
+4.1.2.1*td1*1*general-anglais-td*
+4.1.2.2*td2*1*general-anglais-td*
+4.1.2.3*td3*1*general-anglais-td*
+4.1.3*ce*0**
+4.1.3.1*ce1*1*general-anglais-ce*
+4.1.3.2*ce2*1*general-anglais-ce*
+4.1.3.3*ce3*1*general-anglais-ce*
+4.1.4*de*0**
+4.1.4.1*de1*1*general-anglais-de*
+4.1.4.2*de2*1*general-anglais-de*
+4.1.4.3*de3*1*general-anglais-de*
+4.2*communication*0**
+4.2.1*cours*0**
+4.2.1.1*cours1*1*general-communication-cours*
+4.2.1.2*cours2*1*general-communication-cours*
+4.2.1.3*cours3*1*general-communication-cours*
+4.2.2*td*0**
+4.2.2.1*td1*1*general-communication-td*
+4.2.2.2*td2*1*general-communication-td*
+4.2.2.3*td3*1*general-communication-td*
+4.2.3*ce*0**
+4.2.3.1*ce1*1*general-communication-ce*
+4.2.3.2*ce2*1*general-communication-ce*
+4.2.3.3*ce3*1*general-communication-ce*
+4.2.4*de*0**
+4.2.4.1*de1*1*general-communication-de*
+4.2.4.2*de2*1*general-communication-de*
+4.2.4.3*de3*1*general-communication-de*
