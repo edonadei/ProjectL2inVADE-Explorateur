@@ -18,9 +18,9 @@ taglist add_tag(taglist t,char* name_of_tag);
 
 calendlist init_new_calend(char *name_of_calend,int heure,int jour, int importance, char* tag1, char* tag2, char* tag3);
 calendlist add_calend(calendlist t,char* name_of_calend, int heure,int jour, int importance,char* tag1, char* tag2, char* tag3);
-void _list_echeance_by_score(calendlist c, int h, int j,int nbr_iteration);
+void _list_echeance_by_score(calendlist c, int h, int j,int nbr_iteration,liststring list_of_strings);
 void list_echeance(calendlist c, int h, int j,int nbr_iteration);
-void list_echeance_by_score(calendlist c, int h, int j,int nbr_iteration);
+void list_echeance_by_score(calendlist c, int h, int j,int nbr_iteration,liststring list_of_strings);
 int compare_temps(int j1, int j2, int h1, int h2);
 
 // FONCTION DE GESTION DES FILTRES
@@ -35,5 +35,8 @@ void recherche_fichier_selon_tags (tree a,tree b,char* tag1, char* tag2, char* t
 listnode init_new_lscnode(tree a);
 void recherche_fichier_selon_tags_v2 (tree a,listnode b,char* tag1, char* tag2, char* tag3);
 void show_listnode(listnode l);
+
+liststring add_liststring(liststring l, char* string_to_send);
+liststring init_new_lscstring(char* string_to_send);
 
 #endif // STRUCT_FUNCT_H_INCLUDED

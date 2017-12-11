@@ -41,6 +41,15 @@ typedef struct calend // Liste d'échéances
     int hour,day,emergency; // Coefficient "d'urgence"
 }calend;
 
+typedef struct lscstring
+{
+    char* stringtosend;
+    struct lscstring *next;
+}lscstring;
+
+typedef lscstring *liststring;
+
+
 typedef calend *calendlist;
 typedef nodeId *Idlist;
 typedef nodetag *taglist;

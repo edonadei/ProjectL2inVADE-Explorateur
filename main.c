@@ -35,6 +35,7 @@ int main()
     add_calend(c,"DE d'information numerique",2,12,5,"informatique","information numerique","de");
     add_calend(c,"DE de communication",4,13,5,"general","communication","DE");
 
+    /*
     while(i>0)
     {
         //char* dateh,datej;
@@ -57,11 +58,17 @@ int main()
         printf("\nSouhaitez vous continuer(y/1 n/0): ");
         scanf("%d",&i);
     };
+*/
 
     listnode b=init_new_lscnode(a);
     recherche_fichier_selon_tags_v2(a,b,"physique","champs electromagnetiques","ce");
     show_listnode(b);
     show_tags(b->next->arbre->nexttag);
+
+    liststring list_of_strings = init_new_lscstring("root");
+    list_echeance_by_score(c,h,j,4,list_of_strings);
+
+    printf("%s",list_of_strings->next->stringtosend);
 
      //Test de la récupération de fichiers
 //tree b=init_new_tree("racine",0,NULL);

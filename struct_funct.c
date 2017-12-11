@@ -30,6 +30,30 @@ taglist add_tag(taglist t,char* name_of_tag)
 
 // FONCTION DE GESTION DE L'ARBRE
 
+liststring init_new_lscstring(char* string_to_send)
+{
+    liststring new_list_of_string = malloc(sizeof(lscstring));
+
+    if (new_list_of_string)
+    {
+        new_list_of_string->next=NULL;
+        new_list_of_string->stringtosend=string_to_send;
+    }
+
+    return new_list_of_string;
+}
+
+liststring add_liststring(liststring l, char* string_to_send)
+{
+    if (l==NULL)
+        return NULL;
+
+    while(l->next)
+        l=l->next;
+
+    return (l->next = init_new_lscstring(string_to_send));
+}
+
 listnode init_new_lscnode(tree a)
 {
     listnode new_list_of_nodes = malloc(sizeof(lscnode));
@@ -216,12 +240,13 @@ if(nbr_iteration>0) // conditions d'arrêt
     }
 }
 
-void _list_echeance_by_score(calendlist c, int h, int j,int nbr_iteration) // Fonction d'affichage des 10 premières échéances, à récupérer pour le calcul du score
+void _list_echeance_by_score(calendlist c, int h, int j,int nbr_iteration,liststring list_of_strings) // Fonction d'affichage des 10 premières échéances, à récupérer pour le calcul du score
 {
 //if (nbr_iteration==0) return;
 //printf("\niteration = %d\n",nbr_iteration);
 if(nbr_iteration>0) // conditions d'arrêt
     {
+
         calendlist temp=c; // Var temporaire car on ne veut pas toucher à la struct de base
         //calendlist prec=c; // Deuxième var temporaire pour garder marqueur sur le maillon précédent
 
@@ -257,14 +282,14 @@ if(nbr_iteration>0) // conditions d'arrêt
             prec=prec->next;
             temp=temp->next;
         }
-
-        printf("\n- %s - Jour: %d - Heure: %d - Score: %d",stringtemp,jtemp,htemp,scoretemp);
-
+        char string_temporaire[1000];
+        sprintf(string_temporaire,"%s\n%s %d - %s",stringtemp,number_to_days(jtemp),jtemp+1,number_to_hours(htemp));
+        add_liststring(list_of_strings,string_temporaire);
         // Libération si premier maillon
         if (i == 0)
         {
             //printf("\nmaillon du debut\n");
-            _list_echeance_by_score(c->next,h,j,nbr_iteration-1);
+            _list_echeance_by_score(c->next,h,j,nbr_iteration-1,list_of_strings);
         }
 
         // Libération si dernier maillon de la liste
@@ -272,7 +297,7 @@ if(nbr_iteration>0) // conditions d'arrêt
         {
             //printf("\nmaillon de fin\n");
             prec->next=NULL;
-            _list_echeance_by_score(c,h,j,nbr_iteration-1);
+            _list_echeance_by_score(c,h,j,nbr_iteration-1,list_of_strings);
         }
 
         //printf("\nmaillon du milieu\n");
@@ -280,16 +305,16 @@ if(nbr_iteration>0) // conditions d'arrêt
         //printf("maillon que l'on veut liberer: d %d h %d, maintenant que c est fait, le next du prec = d %d h %d",temp2->day, temp2->hour,prec2->next->day, prec2->next->hour);
         free(temp2);
         // printf("\nmaillon du milieu\n");
-        _list_echeance_by_score(c,h,j,nbr_iteration-1); // On rappelle la fonction et on recommence ! Condition d'arrêt avec les itérations
+        _list_echeance_by_score(c,h,j,nbr_iteration-1,list_of_strings); // On rappelle la fonction et on recommence ! Condition d'arrêt avec les itérations
 
         //printf("\nmaillon du milieu\n");
     }
 }
 
-void list_echeance_by_score(calendlist b, int h, int j,int nbr_iteration) // fonction chapeau
+void list_echeance_by_score(calendlist b, int h, int j,int nbr_iteration,liststring list_of_strings) // fonction chapeau
 {
 calendlist c=copy_lsc_calend(b); // On cherche à travailler sur une LSC que l'on peut charcuter le coeur libre
-_list_echeance_by_score(c,h,j,nbr_iteration);
+_list_echeance_by_score(c,h,j,nbr_iteration,list_of_strings);
 }
 
 int check_if_tag_exist(taglist a, char* tag1)
