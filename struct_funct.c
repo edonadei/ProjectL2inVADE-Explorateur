@@ -283,7 +283,7 @@ if(nbr_iteration>0) // conditions d'arrêt
             temp=temp->next;
         }
         char string_temporaire[1000];
-        sprintf(string_temporaire,"%s\n%s %d - %s",stringtemp,number_to_days(jtemp),jtemp+1,number_to_hours(htemp));
+        sprintf(string_temporaire,"%s %s %d - %s",stringtemp,number_to_days(jtemp),jtemp+1,number_to_hours(htemp));
         add_liststring(list_of_strings,string_temporaire);
         // Libération si premier maillon
         if (i == 0)
@@ -317,6 +317,82 @@ calendlist c=copy_lsc_calend(b); // On cherche à travailler sur une LSC que l'on
 _list_echeance_by_score(c,h,j,nbr_iteration,list_of_strings);
 }
 
+void _list_echeance_by_score_console(calendlist c, int h, int j,int nbr_iteration) // Fonction d'affichage des 10 premières échéances, à récupérer pour le calcul du score
+{
+//if (nbr_iteration==0) return;
+printf("\niteration = %d\n",nbr_iteration);
+if(nbr_iteration>0) // conditions d'arrêt
+    {
+        calendlist temp=c; // Var temporaire car on ne veut pas toucher à la struct de base
+        //calendlist prec=c; // Deuxième var temporaire pour garder marqueur sur le maillon précédent
+
+        //printf("\ntemp->next d: %d h: %d\n", temp->next->day, temp->next->hour);
+
+        int jtemp=0, htemp=0, scoretemp=0, i=0;
+        char* stringtemp;
+        scoretemp=calcul_score(h,j,temp); // On stocke la valeur de la première variable potable
+        //printf("\ntemp->next d: %d h: %d\n", temp->next->day, temp->next->hour);
+        jtemp=temp->day;
+        htemp=temp->hour;
+        stringtemp=temp->word;
+        calendlist prec = temp; // Besoin d'un marqueur temporaire de prec pour libération
+        calendlist temp2,prec2; // Se souvenir de l'emplacement du maillon le plus grand
+        temp=temp->next;
+
+        while (temp) // Deuxième boucle, on étudie le reste de la liste
+        {
+            // printf("\nOn compare le score du maillon en temp: %d et le score du maillon etudie: %d\n",scoretemp,calcul_score(h,j,temp));
+            if (calcul_score(h,j,temp)>scoretemp)
+            {
+                scoretemp=calcul_score(h,j,temp);
+                jtemp=temp->day;
+                htemp=temp->hour;
+                stringtemp=temp->word;
+                temp2=temp;
+                prec2=prec;
+                i++;
+            }
+            //printf("\nprec d: %d h: %d\n", prec->day, prec->hour);
+            //printf("\ntemp d: %d h: %d\n", temp->day, temp->hour);
+
+            prec=prec->next;
+            temp=temp->next;
+        }
+
+        printf("\n- %s - Jour: %d - Heure: %d - Score: %d",stringtemp,jtemp,htemp,scoretemp);
+
+        // Libération si premier maillon
+        if (i == 0)
+        {
+            //printf("\nmaillon du debut\n");
+            _list_echeance_by_score_console(c->next,h,j,nbr_iteration-1);
+        }
+
+        // Libération si dernier maillon de la liste
+        if (temp2->next==NULL)
+        {
+            //printf("\nmaillon de fin\n");
+            prec->next=NULL;
+            _list_echeance_by_score_console(c,h,j,nbr_iteration-1);
+        }
+
+        //printf("\nmaillon du milieu\n");
+        prec2->next=temp2->next; // Libération du maillon étudié
+        //printf("maillon que l'on veut liberer: d %d h %d, maintenant que c est fait, le next du prec = d %d h %d",temp2->day, temp2->hour,prec2->next->day, prec2->next->hour);
+        free(temp2);
+        // printf("\nmaillon du milieu\n");
+        _list_echeance_by_score_console(c,h,j,nbr_iteration-1); // On rappelle la fonction et on recommence ! Condition d'arrêt avec les itérations
+
+        //printf("\nmaillon du milieu\n");
+    }
+}
+
+void list_echeance_by_score_console(calendlist b, int h, int j,int nbr_iteration) // fonction chapeau
+{
+calendlist c=copy_lsc_calend(b); // On cherche à travailler sur une LSC que l'on peut charcuter le coeur libre
+_list_echeance_by_score_console(c,h,j,nbr_iteration);
+}
+
 int check_if_tag_exist(taglist a, char* tag1)
 {
     //printf("test");
@@ -335,12 +411,10 @@ int check_if_tag_exist(taglist a, char* tag1)
     return check_if_tag_exist(a->next,tag1);
 }
 
-void _filtre_liste_echeance (calendlist c,char* tag1,char* tag2)
+void _filtre_liste_echeance (calendlist c,char* tag1,char* tag2) // Sert à filtrer une liste d'échéance en fonction de deux tags
 {
     if (c==NULL)
         return;
-
-    //printf("test");
 
     int x=check_if_tag_exist(c->nexttag,tag1);
 
@@ -357,25 +431,22 @@ void _filtre_liste_echeance (calendlist c,char* tag1,char* tag2)
     {
         c->emergency=c->emergency*3;
     }
-    //printf("test");
 
     _filtre_liste_echeance(c->next,tag1,tag2);
 }
 
-calendlist filtre_liste_echeance (calendlist a,char* tag1, char* tag2)
+calendlist filtre_liste_echeance (calendlist a,char* tag1, char* tag2) // fonction chapeau
 {
     calendlist c=copy_lsc_calend(a);
-    //printf("test");
     _filtre_liste_echeance(c,tag1,tag2);
     return c;
 }
 
-void recherche_fichier_selon_tags (tree a,tree b,char* tag1, char* tag2, char* tag3)
+void recherche_fichier_selon_tags (tree a,tree b,char* tag1, char* tag2, char* tag3) // Associe les fichiers selon la liste d'échéances
 {
 if (a==NULL)
     return;
 
-//printf("\non descend: %s\n",a->word);
 recherche_fichier_selon_tags(a->child,b,tag1,tag2,tag3);
 recherche_fichier_selon_tags(a->next,b,tag1,tag2,tag3);
 
@@ -389,37 +460,26 @@ else
     {
         if (check_if_tag_exist(a->nexttag,tag2) && check_if_tag_exist(a->nexttag,tag3)) // Documents du même type et de la même matiere
         {
-            //printf("\n 2 tags trouves\n");
             add_child(b,a->word,0);
             b->nexttag=a->nexttag;
-            /*b->nexttag=init_new_tag(a->nexttag->word);
-            //printf("\ndebug b->nexttag %s a->nexttag\n",b-W);
-
-            add_tag(b->nexttag,a->nexttag->next->word);
-            add_tag(b->nexttag,a->nexttag->next->next->word);
-            //b->arbo=arborescence_string(a);*/
         }
 
         else if (check_if_tag_exist(a->nexttag,tag2)) // Documents de la meme matiere
         {
-            //printf("\n2 tags trouves\n");
             add_child(b,a->word,0);
             b->nexttag=a->nexttag;
-            /*b->nexttag=init_new_tag(a->nexttag->word);
-            add_tag(b->nexttag,a->nexttag->next->word);
-            add_tag(b->nexttag,a->nexttag->next->next->word);*/
         }
     }
 }
 return;
 }
 
-void recherche_fichier_selon_tags_v2 (tree a,listnode b,char* tag1, char* tag2, char* tag3)
+void recherche_fichier_selon_tags_v2 (tree a,listnode b,char* tag1, char* tag2, char* tag3) // Nouvelle version, ancienne non fonctionnelle et adaptée à la SDL
 {
 if (a==NULL)
     return;
 
-printf("\non descend: %s\n",a->word);
+//printf("\non descend: %s\n",a->word);
 recherche_fichier_selon_tags_v2(a->child,b,tag1,tag2,tag3);
 recherche_fichier_selon_tags_v2(a->next,b,tag1,tag2,tag3);
 
@@ -433,30 +493,24 @@ else
     {
         if (check_if_tag_exist(a->nexttag,tag2) && check_if_tag_exist(a->nexttag,tag3)) // Documents du même type et de la même matiere
         {
-            printf("\n 2 tags trouves\n");
-            add_listnodes(b,a);
-            /*b->nexttag=init_new_tag(a->nexttag->word);
-            //printf("\ndebug b->nexttag %s a->nexttag\n",b-W);
 
-            add_tag(b->nexttag,a->nexttag->next->word);
-            add_tag(b->nexttag,a->nexttag->next->next->word);
-            //b->arbo=arborescence_string(a);*/
+            add_listnodes(b,a);
+            //printf("\n Fichier propose: %s\n",b->arbre->word);
+            //printf("\n Tags du fichier %s \n",print_tag_echeance(b->arbre));
         }
 
         else if (check_if_tag_exist(a->nexttag,tag2)) // Documents de la meme matiere
         {
-            printf("\n2 tags trouves\n");
             add_listnodes(b,a);
-            /*b->nexttag=init_new_tag(a->nexttag->word);
-            add_tag(b->nexttag,a->nexttag->next->word);
-            add_tag(b->nexttag,a->nexttag->next->next->word);*/
+            //printf("\n Fichier propose: %s\n",b->arbre->word);
+            //printf("\n Tags du fichier %s \n",(print_tag_echeance(b->arbre)));
         }
     }
 }
 return;
 }
 
-void show_listnode(listnode l)
+void show_listnode(listnode l) // Affiche une liste de nodes
 {
     if (l==NULL)
     {

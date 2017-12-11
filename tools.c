@@ -193,7 +193,7 @@ calendlist copy_lsc_calend(calendlist a)
     return b;
 }
 
-char* number_to_hours(int i)
+char* number_to_hours(int i) // Transformer un entier en heures
 {
 int creneau = i%5;
 char* string;
@@ -222,7 +222,7 @@ switch(creneau)
 return string;
 }
 
-char* number_to_days(int i)
+char* number_to_days(int i) // Transformer un entier en jours
 {
 //int jour = i%30;
 int creneau = i%4;
@@ -249,12 +249,12 @@ switch(creneau)
 return string;
 }
 
-char *print_tag_echeance(tree a)
+char *print_tag_echeance(tree a) // Imprimer les echeances de tag
 {
     int i,pos=0;
     int tag_entier=0; //Check si tag a été affiché en entier
 
-    char* info = "Details: ";
+    char* info = "Tags: ";
     char* string_tag = malloc((SIZE+2)*sizeof(char));
 
     for (i=0; info[i] != '\0'; i++)
@@ -282,6 +282,7 @@ char *print_tag_echeance(tree a)
             string_tag[i] = a->nexttag->word[i-pos];
         }
     }
+    string_tag[i-1] = '\0';
     if (tag_entier == 1)
     {
         string_tag[SIZE]='.';
@@ -294,35 +295,3 @@ char *print_tag_echeance(tree a)
 
     return string_tag;
 }
-
-/*
-void menu(int h, int j, tree a, calendlist c)
-{
-    char* string;
-    int i=1;
-    calendlist d;
-    while(i)
-    {
-        //char* dateh,datej;
-        printf("\nCreneau actuel: ");
-        printf("%s ",number_to_days(j));
-        printf("%s\n",number_to_hours(h));
-
-        printf("\nListe d'echeance par date:\n");
-        list_echeance(c,h,j,4);
-        printf("\n-----------\n");
-        printf("\nListe d'echeance par score:\n");
-        list_echeance_by_score(c,h,j,2);
-        printf("\n-----------\n");
-        printf("\nChoisissez un tag que vous souhaitez mettre en avant: ");
-        scanf("%s",string);
-
-        d=filtre_liste_echeance(c,"general");
-        list_echeance_by_score(d,h,j,2);
-
-        printf("Souhaitez vous continuer(y/1 n/0): ");
-        scanf("%d",&i);
-    }
-
-}
-*/

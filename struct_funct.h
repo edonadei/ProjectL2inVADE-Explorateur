@@ -21,6 +21,8 @@ calendlist add_calend(calendlist t,char* name_of_calend, int heure,int jour, int
 void _list_echeance_by_score(calendlist c, int h, int j,int nbr_iteration,liststring list_of_strings);
 void list_echeance(calendlist c, int h, int j,int nbr_iteration);
 void list_echeance_by_score(calendlist c, int h, int j,int nbr_iteration,liststring list_of_strings);
+void list_echeance_by_score_console(calendlist c, int h, int j,int nbr_iteration);
+void _list_echeance_by_score_console(calendlist c, int h, int j,int nbr_iteration);
 int compare_temps(int j1, int j2, int h1, int h2);
 
 // FONCTION DE GESTION DES FILTRES

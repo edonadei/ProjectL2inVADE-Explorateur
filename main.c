@@ -6,18 +6,21 @@
 #include "tools.h"
 #include "struct_funct.h"
 #include "initialisation.h"
+#include "view.h"
 
 #define DEBUG 0
 
 
-int main()
+int main(int argc, char *argv[])
 {
-    int h=1,j=1,i=1;
-    calendlist d;
-    //char arbo[47];
 
+
+    //char arbo[47];
+    int i=1,j=1,h=1;
     // INITIALISATION DE L'ARBRE
     tree a=init_tree_save();
+
+
 
     //printf("Nom du fichier: %s\n", a->child->child->child->child->next->next->word);
     //show_tags(a->child->child->child->child->next->next->nexttag);
@@ -35,8 +38,9 @@ int main()
     add_calend(c,"DE d'information numerique",2,12,5,"informatique","information numerique","de");
     add_calend(c,"DE de communication",4,13,5,"general","communication","DE");
 
-    /*
-    while(i>0)
+    // VERSION CONSOLE
+
+     while(i>0)
     {
         //char* dateh,datej;
         printf("\nCreneau actuel: ");
@@ -47,28 +51,42 @@ int main()
         list_echeance(c,h,j,4);
         printf("\n\n-----------\n");
         printf("\nListe d'echeance par score:\n");
-        list_echeance_by_score(c,h,j,2);
+        list_echeance_by_score_console(c,h,j,2);
         printf("\n\n-----------\n");
         printf("\nChoisissez un tag que vous souhaitez mettre en avant:\n\n_Physique\n_Informatique\n_Mathematiques\n_General\n");
         printf("\n-----------\n");
+        char tag1[80],tag2[80];
+        printf("\nPremier tag: ");
+        scanf("%s",tag1);
+        printf("\nDeuxieme tag: ");
+        scanf("%s",tag2);
         printf("\nNouvelle liste d'echeance par score:\n");
-        d=filtre_liste_echeance(c,"cours","communication");
-        list_echeance_by_score(d,h,j,2);
+        calendlist d;
+
+        d=filtre_liste_echeance(c,tag1,tag2);
+        list_echeance_by_score_console(d,h,j,2);
         printf("\n\n-----------\n");
-        printf("\nSouhaitez vous continuer(y/1 n/0): ");
+
+        listnode b=init_new_lscnode(a);
+        recherche_fichier_selon_tags_v2(a,b,tag1,tag2,tag2);
+
+        printf("\nSouhaitez vous continuer ou passer a la version SDL(Console/1 SDL/0): ");
         scanf("%d",&i);
-    };
-*/
+    }
 
-    listnode b=init_new_lscnode(a);
-    recherche_fichier_selon_tags_v2(a,b,"physique","champs electromagnetiques","ce");
-    show_listnode(b);
-    show_tags(b->next->arbre->nexttag);
+    // VERSION SDL
 
-    liststring list_of_strings = init_new_lscstring("root");
-    list_echeance_by_score(c,h,j,4,list_of_strings);
+    view(a,c);
 
-    printf("%s",list_of_strings->next->stringtosend);
+system("pause");
+
+
+    //show_listnode(b);
+    //show_tags(b->next->arbre->nexttag);
+
+
+
+    //printf("%s",list_of_strings->next->stringtosend);
 
      //Test de la récupération de fichiers
 //tree b=init_new_tree("racine",0,NULL);
@@ -85,6 +103,5 @@ int main()
     //printf("%s",arbo);
 
     //show_tags(b->next->arbre->nexttag);
-
     return 0;
 }
