@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1512667065 source:c:\users\emrick-pc-portable\documents\github\projectl2invade-explorateur\main.c
+1512986673 source:c:\users\emrick-pc-portable\documents\github\projectl2invade-explorateur\main.c
 	<stdio.h>
 	<string.h>
 	<stdlib.h>
@@ -7,6 +7,7 @@
 	"structure.h"
 	"tools.h"
 	"struct_funct.h"
+	"initialisation.h"
 
 1512743803 source:c:\users\dclae\documents\github\projectl2invade-explorateur\main.c
 	<stdio.h>
@@ -49,23 +50,23 @@
 
 1512892486 c:\users\dclae\documents\github\projectl2invade-explorateur\struct_funct.h
 
-1511428687 c:\users\emrick-pc-portable\documents\github\projectl2invade-explorateur\save.h
+1512985893 c:\users\emrick-pc-portable\documents\github\projectl2invade-explorateur\save.h
 	"structure.h"
 
-1511428877 c:\users\emrick-pc-portable\documents\github\projectl2invade-explorateur\structure.h
+1512985893 c:\users\emrick-pc-portable\documents\github\projectl2invade-explorateur\structure.h
 
-1511800264 c:\users\emrick-pc-portable\documents\github\projectl2invade-explorateur\tools.h
+1512985893 c:\users\emrick-pc-portable\documents\github\projectl2invade-explorateur\tools.h
 
-1512666124 c:\users\emrick-pc-portable\documents\github\projectl2invade-explorateur\struct_funct.h
+1512986673 c:\users\emrick-pc-portable\documents\github\projectl2invade-explorateur\struct_funct.h
 
-1511428687 source:c:\users\emrick-pc-portable\documents\github\projectl2invade-explorateur\save.c
+1512985893 source:c:\users\emrick-pc-portable\documents\github\projectl2invade-explorateur\save.c
 	<stdio.h>
 	<string.h>
 	<stdlib.h>
 	"structure.h"
 	"tools.h"
 
-1512667155 source:c:\users\emrick-pc-portable\documents\github\projectl2invade-explorateur\struct_funct.c
+1512986698 source:c:\users\emrick-pc-portable\documents\github\projectl2invade-explorateur\struct_funct.c
 	<stdio.h>
 	<string.h>
 	<stdlib.h>
@@ -73,7 +74,7 @@
 	"save.h"
 	"tools.h"
 
-1512666793 source:c:\users\emrick-pc-portable\documents\github\projectl2invade-explorateur\tools.c
+1512985893 source:c:\users\emrick-pc-portable\documents\github\projectl2invade-explorateur\tools.c
 	<stdio.h>
 	<string.h>
 	<stdlib.h>
@@ -142,4 +143,15 @@
 	"tools.h"
 	"save.h"
 	"struct_funct.h"
+
+1512985893 source:c:\users\emrick-pc-portable\documents\github\projectl2invade-explorateur\initialisation.c
+	<stdio.h>
+	<string.h>
+	<stdlib.h>
+	"structure.h"
+	"tools.h"
+	"save.h"
+	"struct_funct.h"
+
+1512985893 c:\users\emrick-pc-portable\documents\github\projectl2invade-explorateur\initialisation.h
 

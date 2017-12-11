@@ -34,5 +34,6 @@ int check_if_tag_exist(taglist a, char* tag1);
 void recherche_fichier_selon_tags (tree a,tree b,char* tag1, char* tag2, char* tag3);
 listnode init_new_lscnode(tree a);
 void recherche_fichier_selon_tags_v2 (tree a,listnode b,char* tag1, char* tag2, char* tag3);
+void show_listnode(listnode l);
 
 #endif // STRUCT_FUNCT_H_INCLUDED

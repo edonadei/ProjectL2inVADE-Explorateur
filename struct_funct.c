@@ -37,7 +37,7 @@ listnode init_new_lscnode(tree a)
     if (new_list_of_nodes)
     {
         new_list_of_nodes->next=NULL;
-        new_list_of_nodes->arbre=NULL;
+        new_list_of_nodes->arbre=a;
     }
 
     return new_list_of_nodes;
@@ -394,9 +394,9 @@ void recherche_fichier_selon_tags_v2 (tree a,listnode b,char* tag1, char* tag2, 
 if (a==NULL)
     return;
 
-//printf("\non descend: %s\n",a->word);
-recherche_fichier_selon_tags(a->child,b,tag1,tag2,tag3);
-recherche_fichier_selon_tags(a->next,b,tag1,tag2,tag3);
+printf("\non descend: %s\n",a->word);
+recherche_fichier_selon_tags_v2(a->child,b,tag1,tag2,tag3);
+recherche_fichier_selon_tags_v2(a->next,b,tag1,tag2,tag3);
 
 if (a->nexttag == NULL);
 
@@ -408,7 +408,7 @@ else
     {
         if (check_if_tag_exist(a->nexttag,tag2) && check_if_tag_exist(a->nexttag,tag3)) // Documents du même type et de la même matiere
         {
-            //printf("\n 2 tags trouves\n");
+            printf("\n 2 tags trouves\n");
             add_listnodes(b,a);
             /*b->nexttag=init_new_tag(a->nexttag->word);
             //printf("\ndebug b->nexttag %s a->nexttag\n",b-W);
@@ -420,7 +420,7 @@ else
 
         else if (check_if_tag_exist(a->nexttag,tag2)) // Documents de la meme matiere
         {
-            //printf("\n2 tags trouves\n");
+            printf("\n2 tags trouves\n");
             add_listnodes(b,a);
             /*b->nexttag=init_new_tag(a->nexttag->word);
             add_tag(b->nexttag,a->nexttag->next->word);
@@ -431,4 +431,13 @@ else
 return;
 }
 
+void show_listnode(listnode l)
+{
+    if (l==NULL)
+    {
+        return;
+    }
+    printf("%s ->", l->arbre->word);
+    show_listnode(l->next);
+}
 

@@ -58,13 +58,15 @@ int main()
         scanf("%d",&i);
     };
 
-    //listnode b=init_new_lscnode(a);
-    //recherche_fichier_selon_tags_v2(a,b,"physique","champs electromagnetiques","ce");
+    listnode b=init_new_lscnode(a);
+    recherche_fichier_selon_tags_v2(a,b,"physique","champs electromagnetiques","ce");
+    show_listnode(b);
+    show_tags(b->next->arbre->nexttag);
 
      //Test de la récupération de fichiers
-    tree b=init_new_tree("racine",0,NULL);
-    recherche_fichier_selon_tags(a,b,"physique","champs electromagnetiques","ce");
-    print_tree_all(b);
+//tree b=init_new_tree("racine",0,NULL);
+  //recherche_fichier_selon_tags(a,b,"physique","champs electromagnetiques","ce");
+    //print_tree_all(b);
 
     // Test de de l'affichage d'enfant d'un dossier
     browse_expl(a->child->child);
